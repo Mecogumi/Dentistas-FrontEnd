@@ -28,7 +28,16 @@
     "@angular/forms": "^20.2.0",
     "@angular/platform-browser": "^20.2.0",
     "@angular/router": "^20.2.0",
+    "@tailwindcss/postcss": "^4.1.12",
+    "angular-calendar": "^0.32.0",
+    "angular-draggable-droppable": "^9.0.1",
+    "angular-resizable-element": "^8.0.0",
+    "cally": "^0.8.0",
+    "daisyui": "^5.1.1",
+    "date-fns": "^4.0.0",
+    "postcss": "^8.5.6",
     "rxjs": "~7.8.0",
+    "tailwindcss": "^4.1.12",
     "tslib": "^2.3.0"
   },
   "devDependencies": {
