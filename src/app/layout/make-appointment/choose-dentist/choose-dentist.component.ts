@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { DentistCardComponent } from '../../dentist-card/dentist-card.component';
+import { DentistCardComponent } from '../../../shared/components/dentist-card/dentist-card.component';
 
 @Component({
   selector: 'app-choose-dentist',
