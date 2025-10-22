@@ -4,3 +4,32 @@
 @plugin "daisyui" {
   themes: light --default;
 }
+
+/* Global styles for text and primary color replacement */
+:root {
+  /* Define custom primary color for highlighting: #0061FF */
+  --color-primary-highlight: #0061FF;
+  /* Define custom dark gray for normal text (Tailwind equivalent: text-gray-700) */
+  --color-text-normal: #4b5563;
+}
+
+body {
+  color: var(--color-text-normal);
+}
+
+/* Utility class to easily apply the primary color */
+.text-primary-highlight {
+  color: var(--color-primary-highlight);
+}
+
+/* Utility class to make buttons/elements use the primary color (for the footer subscribe button) */
+.btn-primary-custom {
+  background-color: var(--color-primary-highlight);
+  border-color: var(--color-primary-highlight);
+  color: white;
+}
+
+.btn-primary-custom:hover {
+  background-color: #004fb3; /* Slightly darker shade for hover */
+  border-color: #004fb3;
+}

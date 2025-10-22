@@ -1,1 +1,24 @@
-<p>home works!</p>,
+<div class="container mx-auto p-4 sm:p-6 lg:p-8">
+  <div class="my-10 text-center">
+    <h1 class="text-4xl sm:text-5xl font-bold text-primary-highlight mb-4">Bienvenido a Clínica Dental Integral</h1>
+    <p class="text-lg">Tu salud dental es nuestra prioridad. Descubre nuestros servicios clave.</p>
+  </div>
+
+  <div class="flex flex-col md:flex-row justify-center items-center md:items-stretch space-y-6 md:space-y-0 md:space-x-6">
+    <app-feature-card
+      [title]="'Pide cita de forma fácil'"
+      [description]="'Elige la hora que prefieras y pide cita sin necesidad de llamar. Es fácil, cómodo y muy rápido'"
+      [icon]="calendarIcon"
+    />
+    <app-feature-card
+      [title]="'Recordatorios por SMS'"
+      [description]="'Te confirmamos la cita al instante y te enviamos un recordatorio a tu celular antes de la cita.'"
+      [icon]="messageIcon"
+    />
+    <app-feature-card
+      [title]="'Sin costos añadidos'"
+      [description]="'La reserva de cita es un servicio gratuito de la Clínica Dental Integral.'"
+      [icon]="paymentIcon"
+    />
+  </div>
+</div>

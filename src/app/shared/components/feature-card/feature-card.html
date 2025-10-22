@@ -1,0 +1,5 @@
+<div class="card w-80 shadow-lg p-6 m-4 flex flex-col items-center text-center bg-base-200">
+    <h2 class="card-title text-xl text-primary-highlight justify-center">{{ title() }}</h2>
+    <p class="text-sm mt-2">{{ description() }}</p>
+    <div class="w-16 h-16 mb-4" [innerHTML]="sanitizedIcon"></div>
+</div>
