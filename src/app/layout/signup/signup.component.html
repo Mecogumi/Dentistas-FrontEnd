@@ -1,0 +1,33 @@
+<div class="hero min-h-full bg-base-200">
+  <div class="hero-content flex-col">
+    <div class="text-center">
+      <h1 class="text-5xl font-bold">¡Regístrate ahora!</h1>
+      <p class="py-6">Crea una cuenta para empezar a gestionar tus citas dentales de manera sencilla y eficiente.</p>
+    </div>
+    <div class="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="card-body">
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text">Nombre Completo</span>
+          </label>
+          <input type="text" placeholder="nombre completo" class="input input-bordered focus:outline-none" formControlName="name" required />
+        </div>
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text">Correo Electrónico</span>
+          </label>
+          <input type="email" placeholder="email@example.com" class="input input-bordered focus:outline-none" formControlName="email" required />
+        </div>
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text">Contraseña</span>
+          </label>
+          <input type="password" placeholder="contraseña" class="input input-bordered focus:outline-none" formControlName="password" required />
+        </div>
+        <div class="form-control mt-6 flex flex-col items-center">
+          <button class="btn btn-primary-custom" type="submit" [disabled]="!signupForm.valid">Registrarse</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
