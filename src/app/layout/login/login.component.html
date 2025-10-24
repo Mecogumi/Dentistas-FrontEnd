@@ -1,0 +1,30 @@
+<div class="hero min-h-full bg-base-200">
+  <div class="hero-content flex-col">
+    <div class="text-center">
+      <h1 class="text-5xl font-bold">¡Inicia sesión ahora!</h1>
+      <p class="py-6">Accede a tu cuenta para gestionar tus citas y ver tu historial dental de forma rápida y segura.</p>
+    </div>
+    <div class="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="card-body">
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text">Correo Electrónico</span>
+          </label>
+          <input type="email" placeholder="email@example.com" class="input input-bordered focus:outline-none" formControlName="email" required />
+        </div>
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text">Contraseña</span>
+          </label>
+          <input type="password" placeholder="contraseña" class="input input-bordered focus:outline-none" formControlName="password" required />
+          <label class="label">
+            <a href="#" class="label-text-alt link link-hover">¿Olvidaste tu contraseña?</a>
+          </label>
+        </div>
+        <div class="form-control mt-6 flex flex-col items-center">
+          <button class="btn btn-primary-custom" type="submit" [disabled]="!loginForm.valid">Iniciar Sesión</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
