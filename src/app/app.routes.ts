@@ -4,6 +4,7 @@ import { ChooseDentistComponent } from './layout/make-appointment/choose-dentist
 import { HomeComponent } from './layout/home/home.component';
 import { LoginComponent } from './layout/login/login.component';
 import { SignupComponent } from './layout/signup/signup.component';
+import { DentistDashboard } from './layout/dentist-dashboard/dentist-dashboard';
 
 export const routes: Routes = [
   {
@@ -27,6 +28,10 @@ export const routes: Routes = [
         component: ChooseDentistComponent
       }
     ]
+  },
+  {
+    path: 'dashboard',
+    component: DentistDashboard
   },
   {
     path: '**',
