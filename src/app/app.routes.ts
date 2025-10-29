@@ -8,7 +8,11 @@ import { DentistDashboard } from './layout/dentist-dashboard/dentist-dashboard';
 
 export const routes: Routes = [
   {
-    path: '', // Sets HomeComponent as the new landing page
+    path:"",
+    component: DentistDashboard
+  },
+  {
+    path: 'home',
     component: HomeComponent,
   },
   {
@@ -30,11 +34,7 @@ export const routes: Routes = [
     ]
   },
   {
-    path: 'dashboard',
-    component: DentistDashboard
-  },
-  {
     path: '**',
     redirectTo: ''
-  },
+  }
 ];

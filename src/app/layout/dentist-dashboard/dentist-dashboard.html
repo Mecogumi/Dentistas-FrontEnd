@@ -1,30 +1,107 @@
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 
-<div>Mis citas</div>
-<div><table>
-    <tr>
-        <th>ID Cita</th>
-        <th>Hora</th>
-        <th>Paciente</th>
-        <th>Estado</th>
-        <th>Acciones</th>
-    </tr>
-    <tr>
-        <td>1</td>
-        <td>11:00 - 12:00</td>
-        <td>José Armando Ordoñez Ramírez</td>
-        <td>Pendiente</td>
-        <td>
-            <span class="material-symbols-outlined">edit</span>
-        </td>
-    </tr>
-        <tr>
-        <td>1</td>
-        <td>11:00 - 12:00</td>
-        <td>José Armando Ordoñez Ramírez</td>
-        <td>Realizada</td>
-        <td>
-            <span class="material-symbols-outlined">clinical_notes</span>
-        </td>
-    </tr>
-</table></div>
+<p class="p-10 text-4xl font-bold text-primary-highlight">Mis citas</p>
+@if (screenWidth700px()) {
+<div class="w-96 px-5 border-b border-neutral-100 inline-flex justify-between items-start">
+    <div class="py-2.5 inline-flex flex-col justify-start items-start">
+        <div class="self-stretch justify-end text-black text-base font-semibold font-['Inter']">ID de Cita</div>
+        <div class="self-stretch justify-end text-black text-base font-semibold font-['Inter']">Hora</div>
+        <div class="self-stretch justify-end text-black text-base font-semibold font-['Inter']">Médico</div>
+        <div class="self-stretch justify-end text-black text-base font-semibold font-['Inter']">Estatus</div>
+    </div>
+    <div class="py-2.5 inline-flex flex-col justify-start items-start">
+        <div class="self-stretch justify-end text-black text-base font-medium font-['Inter']">1</div>
+        <div class="self-stretch justify-end text-black text-base font-medium font-['Inter']">9:00</div>
+        <div class="self-stretch justify-end text-black text-base font-medium font-['Inter']">José Ignacio Pérez Ramírez</div>
+        <div class="self-stretch justify-end text-black text-base font-normal font-['Inter']">Aceptada</div>
+    </div>
+</div>
+<div class="w-96 px-5 border-b border-neutral-100 inline-flex justify-between items-start">
+    <div class="py-2.5 inline-flex flex-col justify-start items-start">
+        <div class="self-stretch justify-end text-black text-base font-semibold font-['Inter']">ID de Cita</div>
+        <div class="self-stretch justify-end text-black text-base font-semibold font-['Inter']">Hora</div>
+        <div class="self-stretch justify-end text-black text-base font-semibold font-['Inter']">Médico</div>
+        <div class="self-stretch justify-end text-black text-base font-semibold font-['Inter']">Estatus</div>
+    </div>
+    <div class="py-2.5 inline-flex flex-col justify-start items-start">
+        <div class="self-stretch justify-end text-black text-base font-medium font-['Inter']">1</div>
+        <div class="self-stretch justify-end text-black text-base font-medium font-['Inter']">9:00</div>
+        <div class="self-stretch justify-end text-black text-base font-medium font-['Inter']">José Ignacio Pérez Ramírez</div>
+        <div class="self-stretch justify-end text-black text-base font-normal font-['Inter']">Aceptada</div>
+    </div>
+</div>
+<div class="w-96 px-5 border-b border-neutral-100 inline-flex justify-between items-start">
+    <div class="py-2.5 inline-flex flex-col justify-start items-start">
+        <div class="self-stretch justify-end text-black text-base font-semibold font-['Inter']">ID de Cita</div>
+        <div class="self-stretch justify-end text-black text-base font-semibold font-['Inter']">Hora</div>
+        <div class="self-stretch justify-end text-black text-base font-semibold font-['Inter']">Médico</div>
+        <div class="self-stretch justify-end text-black text-base font-semibold font-['Inter']">Estatus</div>
+    </div>
+    <div class="py-2.5 inline-flex flex-col justify-start items-start">
+        <div class="self-stretch justify-end text-black text-base font-medium font-['Inter']">1</div>
+        <div class="self-stretch justify-end text-black text-base font-medium font-['Inter']">9:00</div>
+        <div class="self-stretch justify-end text-black text-base font-medium font-['Inter']">José Ignacio Pérez Ramírez</div>
+        <div class="self-stretch justify-end text-black text-base font-normal font-['Inter']">Aceptada</div>
+    </div>
+</div>
+}
+@else {    
+    <div class="w-[1280px] px-28 inline-flex flex-col justify-start items-start gap-[5px] py-10">
+        <div class="self-stretch p-2.5 border-b-2 border-neutral-100 inline-flex justify-between items-center">
+            <div class="flex-1 justify-end text-black font-semibold">ID de Cita</div>
+            <div class="flex-1 justify-end text-black font-semibold">Hora</div>
+            <div class="flex-1 justify-end text-black font-semibold">Médico</div>
+            <div class="flex-1 justify-end text-black font-semibold">Estatus</div>
+            <div class="flex-1 justify-end text-black font-semibold">Expediente</div>
+        </div>
+        <div class="self-stretch p-2.5 border-b-2 border-neutral-100 inline-flex justify-between items-center">
+            <div class="flex-1 justify-end text-black text-base font-medium font-['Inter']">1 </div>
+            <div class="flex-1 justify-end text-black text-base font-medium font-['Inter']">9:00</div>
+            <div class="flex-1 justify-end text-black text-base font-medium font-['Inter']">José Ignacio Pérez Ramírez</div>
+            <div class="flex-1 justify-end text-black text-base font-medium font-['Inter']">
+                    <select class="select w-28">
+                        <option disabled selected>Pendiente</option>
+                        <option>Aceptar</option>
+                        <option>Cancelar</option>
+                    </select>
+                    
+            </div>
+            <div class="flex-1">
+                    <button class="material-symbols-outlined">clinical_notes</button>
+            </div>
+        </div>
+        <div class="self-stretch p-2.5 border-b-2 border-neutral-100 inline-flex justify-between items-center">
+            <div class="flex-1 justify-end text-black text-base font-medium font-['Inter']">1 </div>
+            <div class="flex-1 justify-end text-black text-base font-medium font-['Inter']">9:00</div>
+            <div class="flex-1 justify-end text-black text-base font-medium font-['Inter']">José Ignacio Pérez Ramírez</div>
+            <div class="flex-1 justify-end text-black text-base font-medium font-['Inter']">
+                    <select class="select w-28">
+                        <option disabled selected>Pendiente</option>
+                        <option>Aceptar</option>
+                        <option>Cancelar</option>
+                    </select>
+                    
+            </div>
+            <div class="flex-1">
+                    <button class="material-symbols-outlined">clinical_notes</button>
+            </div>
+        </div>
+        <div class="self-stretch p-2.5 border-b-2 border-neutral-100 inline-flex justify-between items-center">
+            <div class="flex-1 justify-end text-black text-base font-medium font-['Inter']">1 </div>
+            <div class="flex-1 justify-end text-black text-base font-medium font-['Inter']">9:00</div>
+            <div class="flex-1 justify-end text-black text-base font-medium font-['Inter']">José Ignacio Pérez Ramírez</div>
+            <div class="flex-1 justify-end text-black text-base font-medium font-['Inter']">
+                    <select class="select w-28">
+                        <option disabled selected>Pendiente</option>
+                        <option>Aceptar</option>
+                        <option>Cancelar</option>
+                    </select>
+                    
+            </div>
+            <div class="flex-1">
+                    <button class="material-symbols-outlined">clinical_notes</button>
+            </div>
+        </div>
+    </div>
+
+}
