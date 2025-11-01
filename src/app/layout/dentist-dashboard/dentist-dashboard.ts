@@ -1,12 +1,14 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import {BreakpointObserver} from '@angular/cdk/layout'
+import { Footer } from '../../shared/components/footer/footer';
+import { DentistNavbar } from "../../shared/components/dentist-navbar/dentist-navbar";
 
 const bPoint700px = '(max-width: 700px)';
 const bPoint600px = '(max-width: 600px)';
 
 @Component({
   selector: 'app-dentist-dashboard',
-  imports: [],
+  imports: [Footer, DentistNavbar],
   templateUrl: './dentist-dashboard.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
