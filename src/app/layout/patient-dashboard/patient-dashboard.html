@@ -1,0 +1,43 @@
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+<app-patient-nav></app-patient-nav>
+<div class="flex items-center justify-between p-10">
+  <p class="text-4xl font-bold text-primary-highlight">Mis citas</p>
+</div>
+
+<div>
+    <table class="table table-zebra table-auto">
+        <tr>
+            <th>ID de Cita</th>
+            <th>Día</th>
+            <th>Hora</th>
+            <th>Médico</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>Martes 18 de octubre</td>
+            <td>11:00</td>
+            <td>Dr. Juan Pérez</td>
+            <td>Pendiente</td>
+            <td><button onclick="my_modal.showModal()"><span class="material-symbols-outlined">cancel</span></button></td>
+        </tr>
+    </table>
+</div>
+
+<dialog id="my_modal" class="modal">
+  <div class="modal-box">
+    <h3 class="font-bold text-lg">Cancelar Cita</h3>
+    <p class="py-4">¿Deseas cancelar esta cita con el Dr. Juan Pérez?</p>
+    <div class="modal-action">
+      <form method="dialog" class="flex gap-3">
+        <button class="btn">No</button>
+        <button class="btn btn-primary">Sí, cancelar</button>
+      </form>
+    </div>
+  </div>
+</dialog>
+<app-footer></app-footer>
+
+
+

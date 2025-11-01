@@ -1,10 +1,12 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FeatureCard } from '../../shared/components/feature-card/feature-card';
+import { NavbarComponent } from '../../shared/components/public-navbar/navbar.component';
+import { Footer } from '../../shared/components/footer/footer';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [FeatureCard],
+  imports: [FeatureCard, NavbarComponent, Footer],
   templateUrl: './home.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
