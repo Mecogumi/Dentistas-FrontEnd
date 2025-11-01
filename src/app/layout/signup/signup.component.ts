@@ -7,7 +7,7 @@ import { Footer } from '../../shared/components/footer/footer';
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink, NavbarComponent, Footer],
+  imports: [ReactiveFormsModule, NavbarComponent, Footer],
   templateUrl: './signup.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
