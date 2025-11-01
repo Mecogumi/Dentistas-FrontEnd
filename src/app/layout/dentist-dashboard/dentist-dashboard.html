@@ -1,6 +1,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 
-<p class="p-10 text-4xl font-bold text-primary-highlight">Mis citas</p>
+
+<div class="flex items-center justify-between p-10">
+  <p class="text-4xl font-bold text-primary-highlight">Mis citas</p>
+  <button class="btn btn-primary-custom">Guardar</button>
+</div>
+
+<div class="join">
+  <button class="join-item btn">«</button>
+  <button class="join-item btn">Page 22</button>
+  <button class="join-item btn">»</button>
+</div><br>
+
 @if (screenWidth700px()) {
 <div class="w-96 px-5 border-b border-neutral-100 inline-flex justify-between items-start">
     <div class="py-2.5 inline-flex flex-col justify-start items-start">
@@ -13,7 +24,14 @@
         <div class="self-stretch justify-end text-black text-base font-medium font-['Inter']">1</div>
         <div class="self-stretch justify-end text-black text-base font-medium font-['Inter']">9:00</div>
         <div class="self-stretch justify-end text-black text-base font-medium font-['Inter']">José Ignacio Pérez Ramírez</div>
-        <div class="self-stretch justify-end text-black text-base font-normal font-['Inter']">Aceptada</div>
+            <div class="flex-1 justify-end text-black text-base font-medium font-['Inter']">
+                    <select class="select w-28">
+                        <option disabled selected>Pendiente</option>
+                        <option>Aceptar</option>
+                        <option>Cancelar</option>
+                    </select>
+                    
+            </div>
     </div>
 </div>
 <div class="w-96 px-5 border-b border-neutral-100 inline-flex justify-between items-start">
@@ -24,10 +42,17 @@
         <div class="self-stretch justify-end text-black text-base font-semibold font-['Inter']">Estatus</div>
     </div>
     <div class="py-2.5 inline-flex flex-col justify-start items-start">
-        <div class="self-stretch justify-end text-black text-base font-medium font-['Inter']">1</div>
-        <div class="self-stretch justify-end text-black text-base font-medium font-['Inter']">9:00</div>
+        <div class="self-stretch justify-end text-black text-base font-medium font-['Inter']">2</div>
+        <div class="self-stretch justify-end text-black text-base font-medium font-['Inter']">10:00</div>
         <div class="self-stretch justify-end text-black text-base font-medium font-['Inter']">José Ignacio Pérez Ramírez</div>
-        <div class="self-stretch justify-end text-black text-base font-normal font-['Inter']">Aceptada</div>
+            <div class="flex-1 justify-end text-black text-base font-medium font-['Inter']">
+                    <select class="select w-28">
+                        <option disabled selected>Pendiente</option>
+                        <option>Aceptar</option>
+                        <option>Cancelar</option>
+                    </select>
+                    
+            </div>
     </div>
 </div>
 <div class="w-96 px-5 border-b border-neutral-100 inline-flex justify-between items-start">
@@ -38,10 +63,17 @@
         <div class="self-stretch justify-end text-black text-base font-semibold font-['Inter']">Estatus</div>
     </div>
     <div class="py-2.5 inline-flex flex-col justify-start items-start">
-        <div class="self-stretch justify-end text-black text-base font-medium font-['Inter']">1</div>
-        <div class="self-stretch justify-end text-black text-base font-medium font-['Inter']">9:00</div>
+        <div class="self-stretch justify-end text-black text-base font-medium font-['Inter']">3</div>
+        <div class="self-stretch justify-end text-black text-base font-medium font-['Inter']">11:00</div>
         <div class="self-stretch justify-end text-black text-base font-medium font-['Inter']">José Ignacio Pérez Ramírez</div>
-        <div class="self-stretch justify-end text-black text-base font-normal font-['Inter']">Aceptada</div>
+            <div class="flex-1 justify-end text-black text-base font-medium font-['Inter']">
+                    <select class="select w-28">
+                        <option disabled selected>Pendiente</option>
+                        <option>Aceptar</option>
+                        <option>Cancelar</option>
+                    </select>
+                    
+            </div>
     </div>
 </div>
 }

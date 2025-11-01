@@ -5,6 +5,7 @@ import { HomeComponent } from './layout/home/home.component';
 import { LoginComponent } from './layout/login/login.component';
 import { SignupComponent } from './layout/signup/signup.component';
 import { DentistDashboard } from './layout/dentist-dashboard/dentist-dashboard';
+import { Appointment } from './layout/appointment/appointment';
 
 export const routes: Routes = [
   {
@@ -32,6 +33,10 @@ export const routes: Routes = [
         component: ChooseDentistComponent
       }
     ]
+  },
+  {
+    path: 'appointment-nuevo',
+    component: Appointment,
   },
   {
     path: '**',
