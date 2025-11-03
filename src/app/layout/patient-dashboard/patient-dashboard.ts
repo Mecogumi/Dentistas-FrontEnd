@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { PatientNav } from '../../shared/components/patient-navbar/patient-nav';
 import { Footer } from "../../shared/components/footer/footer";
+import { NavbarComponent } from '../../shared/components/navbar/navbar.component';
 
 @Component({
   standalone: true,
   selector: 'app-patient-dashboard',
-  imports: [PatientNav, Footer],
+  imports: [NavbarComponent, Footer],
   templateUrl: './patient-dashboard.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

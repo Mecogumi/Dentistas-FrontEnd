@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FeatureCard } from '../../shared/components/feature-card/feature-card';
-import { NavbarComponent } from '../../shared/components/public-navbar/navbar.component';
+import { NavbarComponent } from '../../shared/components/navbar/navbar.component';
 import { Footer } from '../../shared/components/footer/footer';
 
 @Component({
