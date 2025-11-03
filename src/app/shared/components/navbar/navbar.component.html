@@ -1,13 +1,13 @@
-@if(isAuthenticated){
+@if(profile()?.success){
   <div class="navbar bg-base-100 shadow-sm">
   <div class="navbar-start">
-    <a routerLink="" class="btn btn-ghost text-xl text-primary-highlight font-bold">¡Hola, Paciente!</a>
+    <a routerLink="" class="btn btn-ghost text-xl text-primary-highlight font-bold">¡Hola, {{profile()?.data?.user?.name}}</a>
   </div>
   <div class="navbar-center">
     <!-- Empty for non-logged-in users -->
   </div>
   <div class="navbar-end gap-8">
-    <a routerLink="/login" class="text-primary-highlight hover:underline font-medium">Cerrr Sesión</a>
+    <a routerLink="/home" (click)="logout()" class="text-primary-highlight hover:underline font-medium">Cerrar Sesión</a>
     <a routerLink="/appointment" class="btn btn-primary-custom">Agendar Cita</a>
   </div>
 </div>

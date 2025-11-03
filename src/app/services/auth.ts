@@ -23,4 +23,9 @@ export class Auth {
     return this.http.get<Profile>(environment.API_URL+"/auth/profile");
   }
 
+  logout(){
+    localStorage.removeItem("token");
+    window.location.href = '/home';
+  }
+
 }

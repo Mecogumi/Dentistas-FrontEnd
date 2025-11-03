@@ -1,6 +1,8 @@
-import { ChangeDetectionStrategy, Component, Inject, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, inject, OnInit, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Auth } from '../../../services/auth';
+import { Subscription } from 'rxjs';
+import { Profile } from '../../../interfaces/profile.interface';
 
 
 @Component({
@@ -11,13 +13,18 @@ import { Auth } from '../../../services/auth';
 })
 export class NavbarComponent implements OnInit {
   private authService = inject(Auth)
-  username:string|null = null;
-  isAuthenticated:boolean = false;
+  private suscription!:Subscription;
+  profile = signal<Profile|null>(null)
+
   ngOnInit(): void {
-    this.authService.profile().subscribe(response =>{
-      this.username=response.data.user.name;
-      this.isAuthenticated=response.success;
-    }).unsubscribe()
+    this.suscription= this.authService.profile().subscribe({
+        next: (res) => {this.profile.set(res)},
+        error: (err) => console.error('Error login', err)
+      })
+  }
+
+  logout(){
+    localStorage.removeItem("token");
   }
   
 }
