@@ -1,15 +1,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 
-<app-navbar></app-navbar>
 <div class="flex items-center justify-between p-10">
   <p class="text-4xl font-bold text-primary-highlight">Mis citas</p>
   <button class="btn btn-primary-custom">Guardar</button>
 </div>
 
 <div class="join px-28 flex flex-row items-center justify-center">
-  <button class="join-item btn">«</button>
+  <button (click)="prevDay()" class="join-item btn">«</button>
   <button class="join-item btn">{{date().toLocaleDateString("es")}}</button>
-  <button class="join-item btn">»</button>
+  <button (click)="nextDay()" class="join-item btn">»</button>
 </div><br>
 
 @if (screenWidth700px()) {
@@ -18,13 +17,23 @@
             <div class="py-2.5 inline-flex flex-col justify-start items-start">
                 <div class="self-stretch justify-end text-black text-base font-semibold font-['Inter']">ID de Cita</div>
                 <div class="self-stretch justify-end text-black text-base font-semibold font-['Inter']">Hora</div>
-                <div class="self-stretch justify-end text-black text-base font-semibold font-['Inter']">Médico</div>
+                @if(role()=="dentist"){
+                    <div class="self-stretch justify-end text-black text-base font-semibold font-['Inter']">Pacientee</div>
+                }
+                @else {
+                    <div class="self-stretch justify-end text-black text-base font-semibold font-['Inter']">Médico</div>
+                }
                 <div class="self-stretch justify-end text-black text-base font-semibold font-['Inter']">Estatus</div>
             </div>
             <div class="py-2.5 inline-flex flex-col justify-start items-start">
                 <div class="self-stretch justify-end text-black text-base font-medium font-['Inter']">{{appointment.id}}</div>
                 <div class="self-stretch justify-end text-black text-base font-medium font-['Inter']">{{appointment.date}}</div>
-                <div class="self-stretch justify-end text-black text-base font-medium font-['Inter']">{{appointment.dentist}}</div>
+                @if(role()=="dentist"){
+                    <div class="flex-1 justify-end text-black text-base font-medium font-['Inter']">{{appointment.patient.name}}</div>
+                }
+                @else {
+                    <div class="flex-1 justify-end text-black text-base font-medium font-['Inter']">{{appointment.dentist.name}}</div>
+                }
                     <div class="flex-1 justify-end text-black text-base font-medium font-['Inter']">
                             <select class="select w-28">
                                 <option disabled selected>Pendiente</option>
@@ -36,69 +45,6 @@
             </div>
         </div>
     }
-<div class="w-96 px-5 border-b border-neutral-100 inline-flex justify-between items-start">
-    <div class="py-2.5 inline-flex flex-col justify-start items-start">
-        <div class="self-stretch justify-end text-black text-base font-semibold font-['Inter']">ID de Cita</div>
-        <div class="self-stretch justify-end text-black text-base font-semibold font-['Inter']">Hora</div>
-        <div class="self-stretch justify-end text-black text-base font-semibold font-['Inter']">Médico</div>
-        <div class="self-stretch justify-end text-black text-base font-semibold font-['Inter']">Estatus</div>
-    </div>
-    <div class="py-2.5 inline-flex flex-col justify-start items-start">
-        <div class="self-stretch justify-end text-black text-base font-medium font-['Inter']">1</div>
-        <div class="self-stretch justify-end text-black text-base font-medium font-['Inter']">9:00</div>
-        <div class="self-stretch justify-end text-black text-base font-medium font-['Inter']">José Ignacio Pérez Ramírez</div>
-            <div class="flex-1 justify-end text-black text-base font-medium font-['Inter']">
-                    <select class="select w-28">
-                        <option disabled selected>Pendiente</option>
-                        <option>Aceptar</option>
-                        <option>Cancelar</option>
-                    </select>
-                    
-            </div>
-    </div>
-</div>
-<div class="w-96 px-5 border-b border-neutral-100 inline-flex justify-between items-start">
-    <div class="py-2.5 inline-flex flex-col justify-start items-start">
-        <div class="self-stretch justify-end text-black text-base font-semibold font-['Inter']">ID de Cita</div>
-        <div class="self-stretch justify-end text-black text-base font-semibold font-['Inter']">Hora</div>
-        <div class="self-stretch justify-end text-black text-base font-semibold font-['Inter']">Médico</div>
-        <div class="self-stretch justify-end text-black text-base font-semibold font-['Inter']">Estatus</div>
-    </div>
-    <div class="py-2.5 inline-flex flex-col justify-start items-start">
-        <div class="self-stretch justify-end text-black text-base font-medium font-['Inter']">2</div>
-        <div class="self-stretch justify-end text-black text-base font-medium font-['Inter']">10:00</div>
-        <div class="self-stretch justify-end text-black text-base font-medium font-['Inter']">José Ignacio Pérez Ramírez</div>
-            <div class="flex-1 justify-end text-black text-base font-medium font-['Inter']">
-                    <select class="select w-28">
-                        <option disabled selected>Pendiente</option>
-                        <option>Aceptar</option>
-                        <option>Cancelar</option>
-                    </select>
-                    
-            </div>
-    </div>
-</div>
-<div class="w-96 px-5 border-b border-neutral-100 inline-flex justify-between items-start">
-    <div class="py-2.5 inline-flex flex-col justify-start items-start">
-        <div class="self-stretch justify-end text-black text-base font-semibold font-['Inter']">ID de Cita</div>
-        <div class="self-stretch justify-end text-black text-base font-semibold font-['Inter']">Hora</div>
-        <div class="self-stretch justify-end text-black text-base font-semibold font-['Inter']">Médico</div>
-        <div class="self-stretch justify-end text-black text-base font-semibold font-['Inter']">Estatus</div>
-    </div>
-    <div class="py-2.5 inline-flex flex-col justify-start items-start">
-        <div class="self-stretch justify-end text-black text-base font-medium font-['Inter']">3</div>
-        <div class="self-stretch justify-end text-black text-base font-medium font-['Inter']">11:00</div>
-        <div class="self-stretch justify-end text-black text-base font-medium font-['Inter']">José Ignacio Pérez Ramírez</div>
-            <div class="flex-1 justify-end text-black text-base font-medium font-['Inter']">
-                    <select class="select w-28">
-                        <option disabled selected>Pendiente</option>
-                        <option>Aceptar</option>
-                        <option>Cancelar</option>
-                    </select>
-                    
-            </div>
-    </div>
-</div>
 }
 @else {    
     <div class="w-screen px-28 inline-flex flex-col justify-start items-start gap-[5px] py-10m">
@@ -138,6 +84,4 @@
              </div>
          }
     </div>
-    <app-footer></app-footer>
-
 }

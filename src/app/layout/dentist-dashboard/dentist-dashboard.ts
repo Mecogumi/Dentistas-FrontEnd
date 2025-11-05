@@ -21,7 +21,7 @@ export class DentistDashboard implements OnInit {
   authService = inject(Auth)
   role = signal<string>("")
   private breakpointObserver = inject(BreakpointObserver);
-  date = signal<Date>(new Date(2025, 11, 25))
+  date = signal<Date>(new Date())
   private appointmentService = inject(Appointment)
   rxresoruce = rxResource({
     params: ()=>(this.date()),
@@ -41,6 +41,20 @@ export class DentistDashboard implements OnInit {
         this.screenWidth700px.set(x.breakpoints[bPoint700px]);
         this.screenWidth600px.set(x.breakpoints[bPoint600px]);
       });
+  }
+
+  nextDay(){
+    const current = this.date();
+    const next = new Date(current);
+    next.setDate(current.getDate() + 1);
+    this.date.set(next); 
+  }
+
+  prevDay(){
+    const current = this.date();
+    const prev = new Date(current);
+    prev.setDate(current.getDate() - 1);
+    this.date.set(prev); 
   }
 
 }
