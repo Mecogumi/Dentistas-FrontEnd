@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { firstValueFrom, Observable, tap } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { User } from '../interfaces/user.interface';
 import { Profile } from '../interfaces/profile.interface';
 import { Router } from '@angular/router';
