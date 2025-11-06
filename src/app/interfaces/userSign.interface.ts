@@ -1,5 +1,6 @@
 interface UserSign {
     email: string,
-    user: string,
-    password: string
+    name: string,
+    password: string,
+    phone: string
 }

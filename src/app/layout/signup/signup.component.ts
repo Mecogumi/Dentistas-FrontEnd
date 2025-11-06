@@ -1,16 +1,18 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { NavbarComponent } from '../../shared/components/navbar/navbar.component';
-import { Footer } from '../../shared/components/footer/footer';
+import { Auth } from '../../services/auth';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [ReactiveFormsModule, NavbarComponent, Footer],
+  imports: [ReactiveFormsModule],
   templateUrl: './signup.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SignupComponent {
+  private authService = inject(Auth);
+  private router = inject(Router);
   signupForm = new FormGroup({
     name: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -21,7 +23,19 @@ export class SignupComponent {
   onSubmit() {
     // TODO: Replace with actual signup logic
     if (this.signupForm.valid) {
-      console.log('Form Submitted!', this.signupForm.value);
+      const user:UserSign={
+        email: this.signupForm.value.email!,
+        password: this.signupForm.value.password!,
+        name: this.signupForm.value.name!,
+        phone: this.signupForm.value.phone!
+      }
+      this.authService.register(user).subscribe(
+        {
+          next: user => this.router.navigateByUrl("/")
+        }
+      )
     }
+
   }
+  
 }
