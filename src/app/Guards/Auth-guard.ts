@@ -6,18 +6,12 @@ import { map, catchError, of } from 'rxjs';
 export const authGuard: CanActivateFn = (route, state) => {
   const authService = inject(Auth);
   const router = inject(Router);
-
-  return authService.profile().pipe(
-    map(resp => {
-      if (resp.success) {
-        return true;
-      } else {
-        return router.createUrlTree(['/home']);
-      }
-    }),
-    catchError(err => {
-      console.error('Auth error', err);
-      return of(router.createUrlTree(['/home']));
-    })
-  );
+  const isAuth = authService.getUser().success || false;
+  if (isAuth){
+    return true
+  }
+  else{
+    router.navigateByUrl("/home")
+    return false
+  }
 };

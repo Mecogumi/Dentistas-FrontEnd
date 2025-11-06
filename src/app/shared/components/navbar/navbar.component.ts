@@ -1,8 +1,10 @@
 import { ChangeDetectionStrategy, Component, Inject, inject, OnInit, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { Auth } from '../../../services/auth';
 import { Subscription } from 'rxjs';
 import { Profile } from '../../../interfaces/profile.interface';
+import { rxResource } from '@angular/core/rxjs-interop';
+import { User } from '../../../interfaces/user.interface';
 
 
 @Component({
@@ -12,19 +14,24 @@ import { Profile } from '../../../interfaces/profile.interface';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavbarComponent implements OnInit {
-  private authService = inject(Auth)
-  private suscription!:Subscription;
-  profile = signal<Profile|null>(null)
+  private router = inject(Router);
+  private authService = inject(Auth);
+  profile = signal<User|null>(null)
+  private routerSub!: Subscription;
+
+
+  
 
   ngOnInit(): void {
-    this.suscription= this.authService.profile().subscribe({
-        next: (res) => {this.profile.set(res)},
-        error: (err) => console.error('Error login', err)
-      })
+    this.routerSub = this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.profile.set(this.authService.getUser())
+      }
+    });
   }
 
   logout(){
-    localStorage.removeItem("token");
+    this.authService.logout();
   }
   
 }
