@@ -35,4 +35,9 @@ export class Auth {
     return user;
   }
 
+  singupUser(user:UserSign):Observable<User>{
+    const singUp = environment.API_URL+"/auth/register"
+    return this.http.post<User>(singUp,user);
+  }
+
 }
