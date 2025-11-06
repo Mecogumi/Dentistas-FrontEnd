@@ -1,9 +1,7 @@
-import { ChangeDetectionStrategy, Component, Inject, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { Auth } from '../../../services/auth';
 import { Subscription } from 'rxjs';
-import { Profile } from '../../../interfaces/profile.interface';
-import { rxResource } from '@angular/core/rxjs-interop';
 import { User } from '../../../interfaces/user.interface';
 
 
