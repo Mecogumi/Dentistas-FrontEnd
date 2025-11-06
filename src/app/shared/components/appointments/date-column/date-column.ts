@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, Input } from '@angular/core';
 
 @Component({
   selector: 'app-date-column',
@@ -6,4 +6,8 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   templateUrl: './date-column.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DateColumn { }
+export class DateColumn { 
+  dia=input.required<string>()
+
+  
+}

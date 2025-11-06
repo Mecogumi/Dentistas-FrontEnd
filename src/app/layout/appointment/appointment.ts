@@ -9,5 +9,15 @@ import { DateColumn } from '../../shared/components/appointments/date-column/dat
   templateUrl: './appointment.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Appointment { }
+export class Appointment {
+
+  todayDate = new Date();
+  tomorrowDate = new Date().setDate(this.todayDate.getDate()+1);
+  afterTomorrowDate = new Date().setDate(this.todayDate.getDate()+2);
+  afterAfterTomorrowDate = new Date().setDate(this.todayDate.getDate()+3);
+
+  getDay(date:Date){
+    return date.toLocaleDateString('es-ES', {weekday: 'long'});
+  }
+ }
 
