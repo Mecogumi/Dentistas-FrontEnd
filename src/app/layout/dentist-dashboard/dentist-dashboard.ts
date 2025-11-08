@@ -4,13 +4,14 @@ import {rxResource} from '@angular/core/rxjs-interop'
 import { AppointmentService } from '../../services/appointment.service';
 import { DatePipe } from '@angular/common';
 import { Auth } from '../../services/auth';
+import { AppointmenteStatusPipe } from '../../shared/pipes/appointmenteStatus-pipe';
 
 const bPoint700px = '(max-width: 700px)';
 const bPoint600px = '(max-width: 600px)';
 
 @Component({
   selector: 'app-dentist-dashboard',
-  imports: [DatePipe],
+  imports: [DatePipe,AppointmenteStatusPipe],
   templateUrl: './dentist-dashboard.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

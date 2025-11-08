@@ -70,14 +70,19 @@
                  @else {
                     <div class="flex-1 justify-end text-black text-base font-medium font-['Inter']">{{appointment.dentist.name}}</div>
                  }
-                 <div class="flex-1 justify-end text-black text-base font-medium font-['Inter']">
-                         <select class="select w-28">
-                             <option disabled selected>Pendiente</option>
-                             <option>Aceptar</option>
-                             <option>Cancelar</option>
-                         </select>
-                         
-                 </div>
+                 @if(role()=="dentist" && appointment.status=="scheduled"){
+                     <div class="flex-1 justify-end text-black text-base font-medium font-['Inter']">
+                             <select class="select w-28">
+                                 <option disabled selected>Pendiente</option>
+                                 <option>Aceptar</option>
+                                 <option>Cancelar</option>
+                             </select>
+                             
+                     </div>
+                }
+                @else {
+                     <div class="flex-1 justify-end text-black text-base font-medium font-['Inter']">{{appointment.status| appAppointmenteStatus}}</div>
+                 }
                  <div class="flex-1">
                          <button class="material-symbols-outlined">clinical_notes</button>
                  </div>

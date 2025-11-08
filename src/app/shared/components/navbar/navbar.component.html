@@ -8,7 +8,12 @@
   </div>
   <div class="navbar-end gap-8">
     <a routerLink="/home" (click)="logout()" class="text-primary-highlight hover:underline font-medium">Cerrar Sesión</a>
-    <a routerLink="/appointment" class="btn btn-primary-custom">Agendar Cita</a>
+    @if(profile()?.data?.user?.role=="admin"){
+      <a routerLink="/admin" class="btn btn-soft btn-secondary">Administrar</a>
+    }
+    @else{
+      <a routerLink="/appointment" class="btn btn-primary-custom">Agendar Cita</a>
+    }
   </div>
 </div>
 }

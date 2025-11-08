@@ -1,35 +1,25 @@
 <p class="p-10 text-4xl font-bold text-primary-highlight">Elige el doctor y la hora</p>
 
-<!--Esta es una opción-->
 <div class="flex gap-6 justify-center">
-    <!--Esta es el avatar y nombre del doctor-->
     <section class="flex flex-col items-center justify-center text-center p-4">
-    <!-- Avatar -->
     <div class="avatar mb-3">
         <div class="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
         <img src="https://img.daisyui.com/images/profile/demo/yellingcat@192.webp" />
         </div>
     </div>
 
-    <!-- Información del médico -->
     <p class="text-xl font-semibold text-gray-800">Dr. Juan Pérez</p>
     <p class="text-sm text-gray-500">Odontólogo Especialista en Ortodoncia</p>
 
-    <!-- Datos de contacto -->
     <div class="mt-2 space-y-1 text-sm text-gray-600">
         <p>📞 55 1234 5678</p>
         <p>✉️ juan.perez@clinica.com</p>
     </div>
     </section>
-    <!--Esta es la selección de cita-->
     <section class="flex gap-6">
-        <!--Hoy-->
         <app-date-column (appointmentDate)="confirmDate($event)" [dia]="'Hoy, ' + getDay(todayDate)" [date]="todayDate"></app-date-column>
-        <!--Mañana-->
         <app-date-column (appointmentDate)="confirmDate($event)" [dia]="'Mañana, ' + getDay(tomorrowDate)" [date]="tomorrowDate"></app-date-column>
-        <!--Tercera opción-->
         <app-date-column (appointmentDate)="confirmDate($event)" [dia]="getDay(day2Date)" [date]="day2Date"></app-date-column>
-        <!--Cuarta opción-->
         <app-date-column (appointmentDate)="confirmDate($event)" [dia]="getDay(day3Date)" [date]="day3Date"></app-date-column>
     </section>
 </div>
@@ -54,10 +44,11 @@
           formControlName="reason"
           required
         />
-        <span *ngIf="reasonForm.get('reason')?.invalid && reasonForm.get('reason')?.touched"
-              class="text-sm text-red-500 mt-1">
-          Este campo es obligatorio
-        </span>
+        @if (reasonForm.get('reason')?.invalid && reasonForm.get('reason')?.touched) {
+          <span class="text-sm text-red-500 mt-1">
+            Este campo es obligatorio
+          </span>
+        }
       </div>
       <div class="modal-action flex justify-end gap-3 pt-4">
         <button type="button" class="btn btn-outline" onclick="my_modal.close()">Cancelar</button>

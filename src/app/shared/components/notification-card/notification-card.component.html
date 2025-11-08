@@ -1,0 +1,20 @@
+@if (notification(); as notificationData) {
+  <!-- Make the alert a horizontal flex container so the button can sit on the right -->
+  <div class="alert shadow-lg flex items-center justify-between" [ngClass]="alertClass()">
+    <!-- Left side: icon + text -->
+    <div class="flex items-center gap-4">
+      <!-- Icon -->
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current flex-shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+
+      <div class="min-w-0">
+        <h3 class="font-bold truncate">{{ notificationData?.title }}</h3>
+        <div class="text-xs truncate">{{ notificationData?.message }}</div>
+      </div>
+    </div>
+
+    <!-- Right side: button -->
+    <div class="flex-none ml-4">
+      <button class="btn btn-sm btn-ghost" (click)="onViewDetailsClick()" aria-label="Ver detalles de la notificación">Ver Detalles</button>
+    </div>
+  </div>
+}
