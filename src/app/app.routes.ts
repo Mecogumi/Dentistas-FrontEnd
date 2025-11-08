@@ -30,10 +30,6 @@ export const routes: Routes = [
     component: Appointment,
   },
   {
-    path: 'patient-dashboard',
-    component: PatientDashboard,
-  },
-  {
     path: '**',
     redirectTo: ''
   }

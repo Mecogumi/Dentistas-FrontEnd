@@ -1,23 +1,27 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Footer } from "../../shared/components/footer/footer";
-import { NavbarComponent } from '../../shared/components/navbar/navbar.component';
 import { DateColumn } from '../../shared/components/appointments/date-column/date-column';
 
 @Component({
   selector: 'app-appointment',
-  imports: [NavbarComponent, Footer, DateColumn],
+  imports: [ DateColumn],
   templateUrl: './appointment.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Appointment {
-
   todayDate = new Date();
-  tomorrowDate = new Date().setDate(this.todayDate.getDate()+1);
-  afterTomorrowDate = new Date().setDate(this.todayDate.getDate()+2);
-  afterAfterTomorrowDate = new Date().setDate(this.todayDate.getDate()+3);
+  dateFixed = (num:number) =>{
+    const day = new Date(this.todayDate);
+    day.setDate(day.getDate() + num);
+    return day;
+  }
 
   getDay(date:Date){
-    return date.toLocaleDateString('es-ES', {weekday: 'long'});
+    const day = date.toLocaleDateString('es-ES', { weekday: 'long' });
+    return day.charAt(0).toUpperCase() + day.slice(1)
+  }
+
+  confirmDate(date:Date){
+    console.log(date)
   }
  }
 

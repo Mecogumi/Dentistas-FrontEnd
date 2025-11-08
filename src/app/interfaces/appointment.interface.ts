@@ -20,11 +20,11 @@ export interface Appointment {
     notes:     string;
     createdAt: Date;
     updatedAt: Date;
-    patient:   Dentist;
-    dentist:   Dentist;
+    patient:   UserAppointment;
+    dentist:   UserAppointment;
 }
 
-export interface Dentist {
+export interface UserAppointment {
     id:         number;
     name:       string;
     email:      string;

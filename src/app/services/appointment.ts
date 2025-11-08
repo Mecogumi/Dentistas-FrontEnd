@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Appointments } from '../interfaces/appointment.interface';
+import { OccupiedAppointments } from '../interfaces/ocuppiedAppointments';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,22 @@ export class Appointment {
     params = params.set("startDate",startDate);
     params = params.set("endDate",endDate);
     return this.http.get<Appointments>(url,{params:params});
+  }
+
+  getOcuppiedAppointmentts(date:Date):Observable<OccupiedAppointments>{
+    const dd = date.getDate();
+    const nexday = dd+1;
+    const mm = date.getMonth()+1;
+    const yyyy = date.getFullYear();
+    const startDate = yyyy+"/"+mm+"/"+dd;
+    const endDate = yyyy+"/"+mm+"/"+nexday;
+    const url = environment.API_URL+"/appointments/occupied-slots";
+    let params = new HttpParams();
+    console.log(startDate);
+    console.log(endDate);
+    params = params.set("startDate",startDate);
+    params = params.set("endDate",endDate);
+    return this.http.get<OccupiedAppointments>(url,{params:params});
   }
 
 }

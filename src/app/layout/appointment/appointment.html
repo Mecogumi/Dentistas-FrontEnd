@@ -24,13 +24,13 @@
     <!--Esta es la selección de cita-->
     <section class="flex gap-6">
         <!--Hoy-->
-        <app-date-column [dia]="'Hoy, ' + getDay(todayDate)"></app-date-column>
+        <app-date-column (appointmentDate)="confirmDate($event)" [dia]="'Hoy, ' + getDay(todayDate)" [date]="todayDate"></app-date-column>
         <!--Mañana-->
-        <app-date-column [dia]="'Mañana, ' + getDay(tomorrowDate)"></app-date-column>
+        <app-date-column (appointmentDate)="confirmDate($event)" [dia]="'Mañana, ' + getDay(dateFixed(1))" [date]="dateFixed(1)"></app-date-column>
         <!--Tercera opción-->
-        <app-date-column dia="Miércoles"></app-date-column>
+        <app-date-column (appointmentDate)="confirmDate($event)" [dia]="getDay(dateFixed(2))" [date]="dateFixed(2)"></app-date-column>
         <!--Cuarta opción-->
-        <app-date-column dia="Jueves"></app-date-column>
+        <app-date-column (appointmentDate)="confirmDate($event)" [dia]="getDay(dateFixed(3))" [date]="dateFixed(3)"></app-date-column>
     </section>
 </div>
 
