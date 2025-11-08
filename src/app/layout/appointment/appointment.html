@@ -26,24 +26,45 @@
         <!--Hoy-->
         <app-date-column (appointmentDate)="confirmDate($event)" [dia]="'Hoy, ' + getDay(todayDate)" [date]="todayDate"></app-date-column>
         <!--Mañana-->
-        <app-date-column (appointmentDate)="confirmDate($event)" [dia]="'Mañana, ' + getDay(dateFixed(1))" [date]="dateFixed(1)"></app-date-column>
+        <app-date-column (appointmentDate)="confirmDate($event)" [dia]="'Mañana, ' + getDay(tomorrowDate)" [date]="tomorrowDate"></app-date-column>
         <!--Tercera opción-->
-        <app-date-column (appointmentDate)="confirmDate($event)" [dia]="getDay(dateFixed(2))" [date]="dateFixed(2)"></app-date-column>
+        <app-date-column (appointmentDate)="confirmDate($event)" [dia]="getDay(day2Date)" [date]="day2Date"></app-date-column>
         <!--Cuarta opción-->
-        <app-date-column (appointmentDate)="confirmDate($event)" [dia]="getDay(dateFixed(3))" [date]="dateFixed(3)"></app-date-column>
+        <app-date-column (appointmentDate)="confirmDate($event)" [dia]="getDay(day3Date)" [date]="day3Date"></app-date-column>
     </section>
 </div>
 
-<!--Modal de confirmar cita-->
-<dialog id="my_modal" class="modal">
-  <div class="modal-box">
-    <h3 class="font-bold text-lg">Confirmar Cita</h3>
-    <p class="py-4">¿Deseas agendar esta cita con el Dr. Juan Pérez?</p>
-    <div class="modal-action">
-      <form method="dialog" class="flex gap-3">
-        <button class="btn">Cancelar</button>
-        <button class="btn btn-primary">Agendar</button>
-      </form>
-    </div>
+<dialog #modal id="my_modal" class="modal">
+  <div class="modal-box rounded-2xl shadow-xl">
+    <h3 class="font-semibold text-xl text-center text-gray-800 mb-2">
+      Confirmar cita
+    </h3>
+    <p class="text-gray-600 text-center mb-6">
+      ¿Deseas agendar esta cita con el <span class="font-medium">Dr. Juan Pérez</span>?
+    </p>
+    <form [formGroup]="reasonForm" (ngSubmit)="onSubmit()" class="space-y-4">
+      <div class="form-control">
+        <label class="label">
+          <span class="label-text font-medium text-gray-700">Razón de visita</span>
+        </label>
+        <input
+          type="text"
+          placeholder="Ej. limpieza dental"
+          class="input input-bordered w-full focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all"
+          formControlName="reason"
+          required
+        />
+        <span *ngIf="reasonForm.get('reason')?.invalid && reasonForm.get('reason')?.touched"
+              class="text-sm text-red-500 mt-1">
+          Este campo es obligatorio
+        </span>
+      </div>
+      <div class="modal-action flex justify-end gap-3 pt-4">
+        <button type="button" class="btn btn-outline" onclick="my_modal.close()">Cancelar</button>
+        <button type="submit" class="btn btn-primary" [disabled]="reasonForm.invalid">
+          Agendar
+        </button>
+      </div>
+    </form>
   </div>
 </dialog>

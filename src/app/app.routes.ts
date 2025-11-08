@@ -4,7 +4,6 @@ import { LoginComponent } from './layout/login/login.component';
 import { SignupComponent } from './layout/signup/signup.component';
 import { DentistDashboard } from './layout/dentist-dashboard/dentist-dashboard';
 import { Appointment } from './layout/appointment/appointment';
-import { PatientDashboard } from './layout/patient-dashboard/patient-dashboard';
 import { authGuard } from './Guards/Auth-guard';
 
 export const routes: Routes = [

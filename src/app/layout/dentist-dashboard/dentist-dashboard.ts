@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import {BreakpointObserver} from '@angular/cdk/layout'
 import {rxResource} from '@angular/core/rxjs-interop'
-import { Appointment } from '../../services/appointment';
+import { AppointmentService } from '../../services/appointment.service';
 import { DatePipe } from '@angular/common';
 import { Auth } from '../../services/auth';
 
@@ -19,7 +19,7 @@ export class DentistDashboard implements OnInit {
   role = signal<string>("")
   private breakpointObserver = inject(BreakpointObserver);
   date = signal<Date>(new Date())
-  private appointmentService = inject(Appointment)
+  private appointmentService = inject(AppointmentService)
   rxresoruce = rxResource({
     params: ()=>(this.date()),
     stream: ({params}) => this.appointmentService.getAppointmentByDay(params)

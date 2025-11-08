@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject, input, OnInit, output } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { Appointment } from '../../../../services/appointment';
+import {  AppointmentService } from '../../../../services/appointment.service';
 import { OccupiedSlot } from '../../../../interfaces/ocuppiedAppointments';
 
 @Component({
@@ -16,7 +16,8 @@ export class DateColumn implements OnInit {
   dia=input.required<string>()
   date= input.required<Date>()
   appointmentDate = output<Date>()
-  private appointmentSerivce = inject(Appointment)
+  private appointmentSerivce = inject(AppointmentService)
+
   
   rxResource = rxResource({
     params: ()=>(this.date()),
@@ -37,16 +38,16 @@ export class DateColumn implements OnInit {
   }
 
   clickDay(hour: number) {
-  const baseDate = new Date(this.date());
-  const appointmentDate = new Date(
-    baseDate.getFullYear(),
-    baseDate.getMonth(),
-    baseDate.getDate(),
-    hour,
-    0,    
-    0     
-  );
-  this.appointmentDate.emit(appointmentDate);
-}
+    const baseDate = new Date(this.date());
+    const appointmentDate = new Date(
+      baseDate.getFullYear(),
+      baseDate.getMonth(),
+      baseDate.getDate(),
+      hour,
+      0,    
+      0     
+    );
+    this.appointmentDate.emit(appointmentDate);
+  }
 
 }

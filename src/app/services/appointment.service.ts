@@ -8,7 +8,7 @@ import { OccupiedAppointments } from '../interfaces/ocuppiedAppointments';
 @Injectable({
   providedIn: 'root'
 })
-export class Appointment {
+export class AppointmentService {
   private http = inject(HttpClient)
 
   getAppointmentByDay(date:Date):Observable<Appointments>{
@@ -41,6 +41,12 @@ export class Appointment {
     params = params.set("startDate",startDate);
     params = params.set("endDate",endDate);
     return this.http.get<OccupiedAppointments>(url,{params:params});
+  }
+
+  requestAppointmen(date:Date,reason:string){
+    const requestDate = date.getUTCDate();
+    const url = environment.API_URL+"/appointments";
+    return this.http.post(url,{dentistId:1,date:date,type:"first_visit",notes:reason})
   }
 
 }
