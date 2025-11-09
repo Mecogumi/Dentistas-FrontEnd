@@ -1,4 +1,10 @@
-<p class="p-10 text-4xl font-bold text-primary-highlight">Elige el doctor y la hora</p>
+
+
+
+<div class="flex items-center justify-between mb-4 mx-20">
+    <p class="p-10 text-4xl font-bold text-primary-highlight">Elige el doctor y la hora</p>
+    <button class="btn btn-outline" (click)="goBack()">← Regresar</button>
+</div>
 
 @for (dentist of dentistResource.value()?.data?.dentists; track $index) {
   <div class="flex gap-6 justify-center">

@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { Auth } from '../../services/auth';
 import { RequestDentist } from '../../interfaces/requestDentist.intterface';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-appointment',
@@ -17,6 +18,7 @@ export class Appointment {
   private appointmentService = inject(AppointmentService)
   private authService = inject(Auth)
   private router = inject(Router)
+  private location = inject(Location);
 
   todayDate = new Date();
   tomorrowDate = this.addDays(this.todayDate, 1);
@@ -38,6 +40,10 @@ export class Appointment {
     const day = new Date(base);
     day.setDate(day.getDate() + days);
     return day;
+  }
+
+  goBack(){
+    this.location.back();
   }
 
   getDay(date:Date){

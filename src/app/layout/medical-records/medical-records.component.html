@@ -1,0 +1,49 @@
+<section class="container mx-auto px-4 py-6">
+  <div class="flex items-center justify-between mb-4">
+    <h1 class="text-2xl font-semibold">Expedientes médicos</h1>
+    <button class="btn btn-outline" (click)="goBack()">← Regresar</button>
+  </div>
+
+  <ng-container *ngIf="profileResource.isLoading(); else recordsBlock">
+    <p>Cargando perfil...</p>
+  </ng-container>
+
+  <ng-template #recordsBlock>
+    <ng-container *ngIf="recordsResource.isLoading(); else listBlock">
+      <p>Cargando expedientes...</p>
+    </ng-container>
+  </ng-template>
+
+  <ng-template #listBlock>
+    @if ((recordsResource.value()?.data?.medicalRecords?.length || 0) > 0) {
+      <div class="overflow-x-auto">
+        <table class="table w-full">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Diagnóstico</th>
+              <th>Tratamiento</th>
+              <th>Prescripciones</th>
+              <th>Fecha</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (r of recordsResource.value()?.data?.medicalRecords; track $index) {
+              <tr>
+                <td>{{ r.id }}</td>
+                <td>{{ r.diagnosis }}</td>
+                <td>{{ r.treatment || '-' }}</td>
+                <td>{{ r.prescriptions || '-' }}</td>
+                <td>{{ r.createdAt | date: 'short' }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+    @else {
+      <p>No hay expedientes para mostrar.</p>
+    }
+  </ng-template>
+</section>
+
