@@ -23,6 +23,7 @@ export class DentistDashboard implements OnInit {
   date = signal<Date>(new Date())
   private appointmentService = inject(AppointmentService)
   private appointmentToCancel = signal<number>(0)
+  private appointmentToComplete = signal<number>(0)
   
   rxresoruce = rxResource({
     params: ()=>(this.date()),
@@ -67,6 +68,10 @@ export class DentistDashboard implements OnInit {
     this.appointmentToCancel.set(id)
   }
 
+  setAppointComplete(id:number){
+    this.appointmentToComplete.set(id)
+  }
+
   onCancelAppointment(){
     const modal = document.getElementById('my_modal_cancel') as HTMLDialogElement;
     if (this.appointmentToCancel()!=0){
@@ -77,6 +82,18 @@ export class DentistDashboard implements OnInit {
         } 
       })
 
+    }
+  }
+
+  onCompleteAppointment(){
+    const modal = document.getElementById('my_modal_complete') as HTMLDialogElement;
+    if (this.appointmentToComplete()!=0){
+      this.appointmentService.completeAppointment(this.appointmentToComplete()).subscribe({
+        next: r=>{
+          modal?.close();
+          this.rxresoruce.reload()
+        }
+      })
     }
   }
 

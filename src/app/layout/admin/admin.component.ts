@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { UserAdminService } from '../../services/user-admin.service';
@@ -9,7 +10,7 @@ import { Auth } from '../../services/auth';
 @Component({
   selector: 'app-admin',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './admin.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -60,6 +61,51 @@ export class AdminComponent implements OnInit {
       next: () => {
         (document.getElementById('delete_user_modal') as HTMLDialogElement)?.close();
         this.selectedUserId.set(null);
+        this.usersResource.reload();
+      }
+    });
+  }
+
+  goToDashboard() {
+    this.router.navigateByUrl('');
+  }
+
+  createForm = new FormGroup({
+    name: new FormControl<string>('', { nonNullable: true, validators: [Validators.required, Validators.minLength(3)] }),
+    email: new FormControl<string>('', { nonNullable: true, validators: [Validators.required, Validators.email] }),
+    phone: new FormControl<string>('', { nonNullable: true, validators: [Validators.required, Validators.minLength(10)] }),
+    password: new FormControl<string>('', { nonNullable: true, validators: [Validators.required, Validators.minLength(8)] }),
+    role: new FormControl<'patient' | 'dentist' | 'admin'>('patient', { nonNullable: true }),
+    specialty: new FormControl<string | null>('')
+  });
+
+  openCreateModal() {
+    const dlg = document.getElementById('create_user_modal') as HTMLDialogElement | null;
+    dlg?.showModal();
+  }
+
+  closeCreateModal() {
+    const dlg = document.getElementById('create_user_modal') as HTMLDialogElement | null;
+    dlg?.close();
+  }
+
+  submitCreate() {
+    if (this.createForm.invalid) return;
+    const v = this.createForm.value;
+    const payload: any = {
+      name: v.name!,
+      email: v.email!,
+      phone: v.phone!,
+      password: v.password!,
+      role: v.role!
+    };
+    if (v.role === 'dentist' && v.specialty) {
+      payload.specialty = v.specialty;
+    }
+    this.userAdminService.createUser(payload).subscribe({
+      next: () => {
+        this.closeCreateModal();
+        this.createForm.reset({ role: 'patient' });
         this.usersResource.reload();
       }
     });

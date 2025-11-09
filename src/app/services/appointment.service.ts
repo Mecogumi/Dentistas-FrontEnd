@@ -54,5 +54,10 @@ export class AppointmentService {
     return this.http.patch<Appointments>(url, {});
   }
 
+  completeAppointment(id: number): Observable<Appointments> {
+    const url = `${environment.API_URL}/appointments/${id}/complete`;
+    return this.http.patch<Appointments>(url, {});
+  }
+
 
 }

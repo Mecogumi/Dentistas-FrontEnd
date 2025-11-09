@@ -1,19 +1,22 @@
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+﻿<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 
 <div class="flex items-center justify-between p-10">
   @if (role()=='admin') {
-    <p class="text-4xl font-bold text-primary-highlight">Administración de Citas</p>
+    <p class="text-4xl font-bold text-primary-highlight">Administracíon de Citas</p>
   }
   @else {
     <p class="text-4xl font-bold text-primary-highlight">Mis citas</p>
   }
   <!-- <button class="btn btn-primary-custom">Guardar</button> -->
+  @if (role()=='admin') {
+    <a routerLink="/admin" class="btn rounded-xl">Administrar usuarios</a>
+  }
 </div>
 
 <div class="join px-28 flex flex-row items-center justify-center">
-  <button (click)="prevDay()" class="join-item btn">«</button>
+  <button (click)="prevDay()" class="join-item btn">Anterior</button>
   <button class="join-item btn">{{date().toLocaleDateString("es")}}</button>
-  <button (click)="nextDay()" class="join-item btn">»</button>
+  <button (click)="nextDay()" class="join-item btn">Siguiente</button>
 </div><br>
 
 @if (screenWidth700px()) {
@@ -89,11 +92,17 @@
             }
           </div>
           <div class="flex-3">
-          @if(appointment.status=='scheduled'){
-            <button class="btn bg-green-500 hover:bg-green-600 text-white rounded-xl px-5 transition-all shadow-md">Completar</button>
+          @if(role()=='admin' || role()=='dentist'){
+            <button (click)="setAppointComplete(appointment.id)" onclick="my_modal_complete.showModal()" class="btn bg-green-500 hover:bg-green-600 text-white rounded-xl px-5 transition-all shadow-md">Completar</button>
             <button [routerLink]="`/medical-records/${appointment.patientId}`" class="btn bg-blue-500 hover:bg-blue-600 text-white rounded-xl px-5 transition-all shadow-md">Ver expediente</button>
-            <button (click)="setAppointCancel(appointment.id)" onclick="my_modal_cancel.showModal()" class="btn bg-red-500 hover:bg-red-600 text-white rounded-xl px-5 transition-all shadow-md">Cancelar</button>
           }
+          @switch (appointment.status) {
+            @case ('scheduled') {
+              
+              <button (click)="setAppointCancel(appointment.id)" onclick="my_modal_cancel.showModal()" class="btn bg-red-500 hover:bg-red-600 text-white rounded-xl px-5 transition-all shadow-md">Cancelar</button>
+            }
+          }
+          
           </div>
         </div>
       }
@@ -133,4 +142,38 @@
     <button>close</button>
   </form>
 </dialog>
+
+
+<dialog id="my_modal_complete" class="modal">
+  <div class="modal-box rounded-2xl shadow-xl">
+    <h3 class="text-xl font-semibold text-center text-gray-800 mb-4">
+      Completar cita
+    </h3>
+
+    <p class="text-gray-600 text-center mb-6">
+      ¿Deseas marcar la cita como completada?
+    </p>
+
+    <div class="modal-action flex justify-center gap-4 pt-2">
+      <button 
+        type="button" 
+        class="btn btn-outline rounded-xl px-5 hover:opacity-90 transition-all"
+        onclick="my_modal_complete.close()">
+        Cerrar
+      </button>
+
+      <button 
+        type="button" 
+        class="btn bg-green-600 text-white rounded-xl px-5 shadow-md hover:bg-green-700 transition-all"
+        (click)="onCompleteAppointment()">
+        Completar
+      </button>
+    </div>
+  </div>
+
+  <form method="dialog" class="modal-backdrop">
+    <button>close</button>
+  </form>
+</dialog>
+
 

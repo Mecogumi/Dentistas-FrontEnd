@@ -25,4 +25,16 @@ export class UserAdminService {
     const url = `${environment.API_URL}/auth/user/${id}`;
     return this.http.delete<{ success: boolean }>(url);
   }
+
+  createUser(payload: {
+    name: string;
+    email: string;
+    phone: string;
+    password: string;
+    role: 'patient' | 'dentist' | 'admin';
+    specialty?: string | null;
+  }): Observable<any> {
+    const url = `${environment.API_URL}/auth/register`;
+    return this.http.post(url, payload);
+  }
 }
