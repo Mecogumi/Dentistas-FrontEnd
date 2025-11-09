@@ -5,10 +5,8 @@ import { SignupComponent } from './layout/signup/signup.component';
 import { DentistDashboard } from './layout/dentist-dashboard/dentist-dashboard';
 import { Appointment } from './layout/appointment/appointment';
 import { authGuard } from './Guards/Auth-guard';
-import { CrudDentists } from './layout/crud-dentists/crud-dentists';
-import { CrudPatient } from './layout/crud-patient/crud-patient';
-import { CrudAppointments } from './layout/crud-appointments/crud-appointments';
 import { NotificationsComponent } from './layout/notifications/notifications.component';
+import { AdminComponent } from './layout/admin/admin.component';
 
 export const routes: Routes = [
   {
@@ -33,12 +31,9 @@ export const routes: Routes = [
     component: Appointment,
   },
   {
-    path: 'admin/pacientes',
-    component: CrudPatient,
-  },
-  {
-    path: 'admin/medicos',
-    component: CrudDentists,
+    path: 'admin',
+    component: AdminComponent,
+    canActivate:[authGuard]
   },
   {
     path: 'notifications',

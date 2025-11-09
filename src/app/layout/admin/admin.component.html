@@ -1,0 +1,71 @@
+<div class="flex items-center justify-between p-10">
+  <p class="text-4xl font-bold text-primary-highlight">Administración de Usuarios</p>
+  <div class="join">
+    <input #txt type="text" class="input input-bordered join-item" placeholder="Buscar por nombre o email">
+    <button class="btn btn-primary-custom join-item" (click)="search.set(txt.value.trim())">Buscar</button>
+  </div>
+  
+</div>
+
+<div class="w-screen px-10 inline-flex flex-col justify-start items-start">
+  <div class="self-stretch p-2.5 border-b-2 border-neutral-100 inline-flex justify-between items-center">
+    <div class="flex-1 font-semibold">ID</div>
+    <div class="flex-1 font-semibold">Nombre</div>
+    <div class="flex-1 font-semibold">Email</div>
+    <div class="flex-1 font-semibold">Teléfono</div>
+    <div class="flex-1 font-semibold">Rol</div>
+    <div class="flex-1 font-semibold">Estado</div>
+    <div class="flex-1 font-semibold">Acciones</div>
+  </div>
+
+  @if (usersResource.isLoading()) {
+    <div class="p-6 text-gray-500">Cargando usuarios…</div>
+  }
+  @else if (usersResource.error()) {
+    <div class="p-6 text-red-500">Error al cargar usuarios.</div>
+  }
+  @else {
+    @for (u of usersResource.value()?.data?.users; track u.id) {
+      <div class="self-stretch p-2.5 border-b-2 border-neutral-100 inline-flex justify-between items-center">
+        <div class="flex-1">{{u.id}}</div>
+        <div class="flex-1">{{u.name}}</div>
+        <div class="flex-1">{{u.email}}</div>
+        <div class="flex-1">{{u.phone}}</div>
+        <div class="flex-1">{{u.role}}</div>
+        <!-- <div class="flex-1">
+          <select class="select select-bordered select-sm w-36" [value]="u.role">
+            <option value="patient">Paciente</option>
+            <option value="dentist">Dentista</option>
+            <option value="admin">Admin</option>
+          </select>
+        </div> -->
+        <div class="flex-1">
+          @if (u.isActive) {
+            <span class="badge badge-success mr-3">Activo</span>
+            <button class="btn btn-sm" (click)="toggleActive(u)">Desactivar</button>
+          }
+          @else {
+            <span class="badge badge-ghost mr-3">Inactivo</span>
+            <button class="btn btn-sm btn-primary-custom" (click)="toggleActive(u)">Activar</button>
+          }
+        </div>
+        <div class="flex-1">
+          <button class="btn btn-sm btn-error text-white" (click)="askDelete(u.id)">Eliminar</button>
+        </div>
+      </div>
+    }
+  }
+</div>
+
+<dialog id="delete_user_modal" class="modal">
+  <div class="modal-box rounded-2xl shadow-xl">
+    <h3 class="text-xl font-semibold text-center text-gray-800 mb-4">Eliminar usuario</h3>
+    <p class="text-gray-600 text-center mb-6">¿Deseas eliminar este usuario? Esta acción no se puede deshacer.</p>
+    <div class="modal-action flex justify-center gap-4 pt-2">
+      <button type="button" class="btn btn-outline rounded-xl px-5" onclick="delete_user_modal.close()">Cancelar</button>
+      <button type="button" class="btn btn-error text-white rounded-xl px-5" (click)="confirmDelete()">Eliminar</button>
+    </div>
+  </div>
+  <form method="dialog" class="modal-backdrop"><button>close</button></form>
+</dialog>
+
