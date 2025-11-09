@@ -5,13 +5,14 @@ import { AppointmentService } from '../../services/appointment.service';
 import { DatePipe } from '@angular/common';
 import { Auth } from '../../services/auth';
 import { AppointmenteStatusPipe } from '../../shared/pipes/appointmenteStatus-pipe';
+import { RouterLink } from "@angular/router";
 
 const bPoint700px = '(max-width: 700px)';
 const bPoint600px = '(max-width: 600px)';
 
 @Component({
   selector: 'app-dentist-dashboard',
-  imports: [DatePipe,AppointmenteStatusPipe],
+  imports: [DatePipe, AppointmenteStatusPipe, RouterLink],
   templateUrl: './dentist-dashboard.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

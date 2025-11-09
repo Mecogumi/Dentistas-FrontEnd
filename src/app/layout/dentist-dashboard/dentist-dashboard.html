@@ -1,7 +1,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 
 <div class="flex items-center justify-between p-10">
-  <p class="text-4xl font-bold text-primary-highlight">Mis citas</p>
+  @if (role()=='admin') {
+    <p class="text-4xl font-bold text-primary-highlight">Administración de Citas</p>
+  }
+  @else {
+    <p class="text-4xl font-bold text-primary-highlight">Mis citas</p>
+  }
   <!-- <button class="btn btn-primary-custom">Guardar</button> -->
 </div>
 
@@ -47,41 +52,52 @@
     }
 }
 @else {    
-    <div class="w-screen px-28 inline-flex flex-col justify-start items-start gap-[5px] py-10m">
-        <div class="self-stretch p-2.5 border-b-2 border-neutral-100 inline-flex justify-between items-center">
-            <div class="flex-1 justify-end text-black font-semibold">ID de Cita</div>
-            <div class="flex-1 justify-end text-black font-semibold">Hora</div>
-            @if(role()=="dentist"){
-                <div class="flex-1 justify-end text-black font-semibold">Paciente</div>
-            }
-            @else {
-                <div class="flex-1 justify-end text-black font-semibold">Médico</div>
-            }
-            <div class="flex-1 justify-end text-black font-semibold">Estatus</div>
-            <div class="flex-1 justify-end text-black font-semibold">Acciones</div>
-        </div>
-         @for (appointment of rxresoruce.value()?.data?.appointments; track $index) {
-             <div class="self-stretch p-2.5 border-b-2 border-neutral-100 inline-flex justify-between items-center">
-                <div class="flex-1 justify-end text-black text-base font-medium font-['Inter']">{{appointment.id}}</div>
-                <div class="flex-1 justify-end text-black text-base font-medium font-['Inter']">{{appointment.date | date:'shortTime'}}</div>
-                @if(role()=="dentist"){
-                    <div class="flex-1 justify-end text-black text-base font-medium font-['Inter']">{{appointment.patient.name}}</div>
-                }
-                @else {
-                    <div class="flex-1 justify-end text-black text-base font-medium font-['Inter']">{{appointment.dentist.name}}</div>
-                }
-                <div class="flex-1 justify-end text-black text-base font-medium font-['Inter']">{{appointment.status| appAppointmenteStatus}}</div>
-                <div class="flex-1">
-                    @if(appointment.status=='scheduled'){
-                        <button (click)="setAppointCancel(appointment.id)" onclick="my_modal_cancel.showModal()" class="btn bg-red-500 hover:bg-red-600 text-white rounded-xl px-5 transition-all shadow-md">Cancelar</button>
-                    }
-                    @else{
-                    <button disabled onclick="my_modal_cancel.showModal()" class="btn bg-red-500 hover:bg-red-600 text-white rounded-xl px-5 transition-all shadow-md">Cancelar</button>
-                    }
-                </div>
-             </div>
-         }
+  <div class="w-screen px-28 inline-flex flex-col justify-start items-start gap-[5px] py-10m">
+    <div class="self-stretch p-2.5 border-b-2 border-neutral-100 inline-flex justify-between items-center">
+      <div class="flex-2 justify-end text-black font-semibold">ID de Cita</div>
+      <div class="flex-2 justify-end text-black font-semibold">Hora</div>
+      @if(role()=="dentist"){
+          <div class="flex-2 justify-end text-black font-semibold">Paciente</div>
+      }
+      @else {
+          <div class="flex-2 justify-end text-black font-semibold">Médico</div>
+      }
+      <div class="flex-2 justify-end text-black font-semibold">Estatus</div>
+      <div class="flex-3 justify-end text-black font-semibold">Acciones</div>
     </div>
+      @for (appointment of rxresoruce.value()?.data?.appointments; track $index) {
+        <div class="self-stretch p-2.5 border-b-2 border-neutral-100 inline-flex justify-between items-center">
+          <div class="flex-2 justify-end text-black text-base font-medium font-['Inter']">{{appointment.id}}</div>
+          <div class="flex-2 justify-end text-black text-base font-medium font-['Inter']">{{appointment.date | date:'shortTime'}}</div>
+          @if(role()=="dentist"){
+              <div class="flex-2 justify-end text-black text-base font-medium font-['Inter']">{{appointment.patient.name}}</div>
+          }
+          @else {
+              <div class="flex-2 justify-end text-black text-base font-medium font-['Inter']">{{appointment.patient.name}}</div>
+          }
+          <div class="flex-2 flex justify-start items-center">
+            @switch (appointment.status) {
+              @case ('scheduled') {
+                <span class="badge badge-warning">{{appointment.status | appAppointmenteStatus}}</span>
+              }
+              @case ('cancelled') {
+                <span class="badge badge-error">{{appointment.status | appAppointmenteStatus}}</span>
+              }
+              @case ('completed') {
+                <span class="badge badge-success">{{appointment.status | appAppointmenteStatus}}</span>
+              }
+            }
+          </div>
+          <div class="flex-3">
+          @if(appointment.status=='scheduled'){
+            <button class="btn bg-green-500 hover:bg-green-600 text-white rounded-xl px-5 transition-all shadow-md">Completar</button>
+            <button [routerLink]="`/medical-records/${appointment.patientId}`" class="btn bg-blue-500 hover:bg-blue-600 text-white rounded-xl px-5 transition-all shadow-md">Ver expediente</button>
+            <button (click)="setAppointCancel(appointment.id)" onclick="my_modal_cancel.showModal()" class="btn bg-red-500 hover:bg-red-600 text-white rounded-xl px-5 transition-all shadow-md">Cancelar</button>
+          }
+          </div>
+        </div>
+      }
+  </div>
 }
 
 

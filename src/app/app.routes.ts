@@ -32,7 +32,7 @@ export const routes: Routes = [
     component: Appointment,
   },
   {
-    path: 'medical-records',
+    path: 'medical-records/:patientId',
     component: MedicalRecordsComponent,
     canActivate:[authGuard]
   },

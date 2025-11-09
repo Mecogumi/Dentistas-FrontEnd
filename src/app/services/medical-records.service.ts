@@ -17,5 +17,15 @@ export class MedicalRecordsService {
     const url = `${environment.API_URL}/medical-records/${id}`;
     return this.http.get<MedicalRecordResponse>(url);
   }
-}
 
+  create(payload: {
+    patientId: number;
+    diagnosis: string;
+    treatment?: string | null;
+    prescriptions?: string | null;
+    notes?: string | null;
+  }): Observable<MedicalRecordResponse> {
+    const url = `${environment.API_URL}/medical-records`;
+    return this.http.post<MedicalRecordResponse>(url, payload);
+  }
+}

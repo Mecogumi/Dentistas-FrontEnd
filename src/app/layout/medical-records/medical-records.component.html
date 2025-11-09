@@ -1,49 +1,76 @@
 <section class="container mx-auto px-4 py-6">
   <div class="flex items-center justify-between mb-4">
     <h1 class="text-2xl font-semibold">Expedientes médicos</h1>
-    <button class="btn btn-outline" (click)="goBack()">← Regresar</button>
+    <div class="flex gap-2">
+      <button class="btn btn-outline" (click)="goBack()">← Regresar</button>
+      @if (role() === 'dentist' || role() === 'admin') {
+        <button class="btn btn-primary" (click)="openAddModal()" onclick="add_medical_record_modal.showModal()">Agregar expediente</button>
+      }
+    </div>
   </div>
-
-  <ng-container *ngIf="profileResource.isLoading(); else recordsBlock">
-    <p>Cargando perfil...</p>
-  </ng-container>
-
-  <ng-template #recordsBlock>
-    <ng-container *ngIf="recordsResource.isLoading(); else listBlock">
-      <p>Cargando expedientes...</p>
-    </ng-container>
-  </ng-template>
-
-  <ng-template #listBlock>
-    @if ((recordsResource.value()?.data?.medicalRecords?.length || 0) > 0) {
-      <div class="overflow-x-auto">
-        <table class="table w-full">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Diagnóstico</th>
-              <th>Tratamiento</th>
-              <th>Prescripciones</th>
-              <th>Fecha</th>
-            </tr>
-          </thead>
-          <tbody>
-            @for (r of recordsResource.value()?.data?.medicalRecords; track $index) {
+  @if(recordsResource.isLoading()){
+    <p>Cargando expedientes...</p> 
+  }
+  @else{
+      @if ((recordsResource.value()?.data?.medicalRecords?.length || 0) > 0) {
+        <div class="overflow-x-auto">
+          <table class="table w-full">
+            <thead>
               <tr>
-                <td>{{ r.id }}</td>
-                <td>{{ r.diagnosis }}</td>
-                <td>{{ r.treatment || '-' }}</td>
-                <td>{{ r.prescriptions || '-' }}</td>
-                <td>{{ r.createdAt | date: 'short' }}</td>
+                <th>ID</th>
+                <th>Diagnóstico</th>
+                <th>Tratamiento</th>
+                <th>Prescripciones</th>
+                <th>Fecha</th>
               </tr>
-            }
-          </tbody>
-        </table>
-      </div>
-    }
-    @else {
-      <p>No hay expedientes para mostrar.</p>
-    }
-  </ng-template>
+            </thead>
+            <tbody>
+              @for (r of recordsResource.value()?.data?.medicalRecords; track $index) {
+                <tr>
+                  <td>{{ r.id }}</td>
+                  <td>{{ r.diagnosis }}</td>
+                  <td>{{ r.treatment || '-' }}</td>
+                  <td>{{ r.prescriptions || '-' }}</td>
+                  <td>{{ r.createdAt | date: 'short' }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+      @else {
+        <p>No hay expedientes para mostrar.</p>
+      }
+  }
+
 </section>
 
+<dialog id="add_medical_record_modal" class="modal">
+  <div class="modal-box rounded-2xl shadow-xl">
+    <h3 class="font-bold text-lg mb-4">Nuevo expediente médico</h3>
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="form-control mb-3">
+        <label class="label"><span class="label-text">Diagnóstico</span></label>
+        <input class="input input-bordered w-full" type="text" formControlName="diagnosis" placeholder="Diagnóstico" />
+      </div>
+      <div class="form-control mb-3">
+        <label class="label"><span class="label-text">Tratamiento</span></label>
+        <textarea class="textarea textarea-bordered w-full" rows="2" formControlName="treatment" placeholder="Tratamiento"></textarea>
+      </div>
+      <div class="form-control mb-3">
+        <label class="label"><span class="label-text">Prescripciones</span></label>
+        <textarea class="textarea textarea-bordered w-full" rows="2" formControlName="prescriptions" placeholder="Prescripciones"></textarea>
+      </div>
+      <div class="form-control mb-3">
+        <label class="label"><span class="label-text">Notas</span></label>
+        <textarea class="textarea textarea-bordered w-full" rows="2" formControlName="notes" placeholder="Notas"></textarea>
+      </div>
+
+      <div class="modal-action flex justify-end gap-3 pt-4">
+        <button type="button" class="btn btn-outline" (click)="closeAddModal()" onclick="add_medical_record_modal.close()">Cancelar</button>
+        <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Guardar</button>
+      </div>
+    </form>
+  </div>
+  <form method="dialog" class="modal-backdrop"><button>close</button></form>
+</dialog>
