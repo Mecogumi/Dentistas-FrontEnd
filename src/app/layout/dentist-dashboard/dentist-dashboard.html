@@ -2,7 +2,7 @@
 
 <div class="flex items-center justify-between p-10">
   <p class="text-4xl font-bold text-primary-highlight">Mis citas</p>
-  <button class="btn btn-primary-custom">Guardar</button>
+  <!-- <button class="btn btn-primary-custom">Guardar</button> -->
 </div>
 
 <div class="join px-28 flex flex-row items-center justify-center">
@@ -58,35 +58,63 @@
                 <div class="flex-1 justify-end text-black font-semibold">Médico</div>
             }
             <div class="flex-1 justify-end text-black font-semibold">Estatus</div>
-            <div class="flex-1 justify-end text-black font-semibold">Expediente</div>
+            <div class="flex-1 justify-end text-black font-semibold">Acciones</div>
         </div>
          @for (appointment of rxresoruce.value()?.data?.appointments; track $index) {
              <div class="self-stretch p-2.5 border-b-2 border-neutral-100 inline-flex justify-between items-center">
-                 <div class="flex-1 justify-end text-black text-base font-medium font-['Inter']">{{appointment.id}}</div>
-                 <div class="flex-1 justify-end text-black text-base font-medium font-['Inter']">{{appointment.date | date:'shortTime'}}</div>
-                 @if(role()=="dentist"){
+                <div class="flex-1 justify-end text-black text-base font-medium font-['Inter']">{{appointment.id}}</div>
+                <div class="flex-1 justify-end text-black text-base font-medium font-['Inter']">{{appointment.date | date:'shortTime'}}</div>
+                @if(role()=="dentist"){
                     <div class="flex-1 justify-end text-black text-base font-medium font-['Inter']">{{appointment.patient.name}}</div>
-                 }
-                 @else {
-                    <div class="flex-1 justify-end text-black text-base font-medium font-['Inter']">{{appointment.dentist.name}}</div>
-                 }
-                 @if(role()=="dentist" && appointment.status=="scheduled"){
-                     <div class="flex-1 justify-end text-black text-base font-medium font-['Inter']">
-                             <select class="select w-28">
-                                 <option disabled selected>Pendiente</option>
-                                 <option>Aceptar</option>
-                                 <option>Cancelar</option>
-                             </select>
-                             
-                     </div>
                 }
                 @else {
-                     <div class="flex-1 justify-end text-black text-base font-medium font-['Inter']">{{appointment.status| appAppointmenteStatus}}</div>
-                 }
-                 <div class="flex-1">
-                         <button class="material-symbols-outlined">clinical_notes</button>
-                 </div>
+                    <div class="flex-1 justify-end text-black text-base font-medium font-['Inter']">{{appointment.dentist.name}}</div>
+                }
+                <div class="flex-1 justify-end text-black text-base font-medium font-['Inter']">{{appointment.status| appAppointmenteStatus}}</div>
+                <div class="flex-1">
+                    @if(appointment.status=='scheduled'){
+                        <button (click)="setAppointCancel(appointment.id)" onclick="my_modal_cancel.showModal()" class="btn bg-red-500 hover:bg-red-600 text-white rounded-xl px-5 transition-all shadow-md">Cancelar</button>
+                    }
+                    @else{
+                    <button disabled onclick="my_modal_cancel.showModal()" class="btn bg-red-500 hover:bg-red-600 text-white rounded-xl px-5 transition-all shadow-md">Cancelar</button>
+                    }
+                </div>
              </div>
          }
     </div>
 }
+
+
+<dialog id="my_modal_cancel" class="modal">
+  <div class="modal-box rounded-2xl shadow-xl">
+    <h3 class="text-xl font-semibold text-center text-gray-800 mb-4">
+      Estás a punto de cancelar tu cita
+    </h3>
+
+    <p class="text-gray-600 text-center mb-6">
+      ¿Deseas continuar con la cancelación?
+    </p>
+
+    <div class="modal-action flex justify-center gap-4 pt-2">
+      <button 
+        type="button" 
+        class="btn btn-outline rounded-xl px-5 hover:opacity-90 transition-all"
+        onclick="my_modal_cancel.close()">
+        Cerrar
+      </button>
+
+      <button 
+        type="button" 
+        class="btn btn-error text-white rounded-xl px-5 shadow-md hover:bg-red-600 transition-all"
+        (click)="onCancelAppointment()">
+        Cancelar
+      </button>
+    </div>
+  </div>
+
+  <!-- Fondo clicable para cerrar -->
+  <form method="dialog" class="modal-backdrop">
+    <button>close</button>
+  </form>
+</dialog>
+

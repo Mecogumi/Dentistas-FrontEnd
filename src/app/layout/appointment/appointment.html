@@ -1,28 +1,30 @@
 <p class="p-10 text-4xl font-bold text-primary-highlight">Elige el doctor y la hora</p>
 
-<div class="flex gap-6 justify-center">
-    <section class="flex flex-col items-center justify-center text-center p-4">
-    <div class="avatar mb-3">
-        <div class="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-        <img src="https://img.daisyui.com/images/profile/demo/yellingcat@192.webp" />
-        </div>
-    </div>
-
-    <p class="text-xl font-semibold text-gray-800">Dr. Juan Pérez</p>
-    <p class="text-sm text-gray-500">Odontólogo Especialista en Ortodoncia</p>
-
-    <div class="mt-2 space-y-1 text-sm text-gray-600">
-        <p>📞 55 1234 5678</p>
-        <p>✉️ juan.perez@clinica.com</p>
-    </div>
-    </section>
-    <section class="flex gap-6">
-        <app-date-column (appointmentDate)="confirmDate($event)" [dia]="'Hoy, ' + getDay(todayDate)" [date]="todayDate"></app-date-column>
-        <app-date-column (appointmentDate)="confirmDate($event)" [dia]="'Mañana, ' + getDay(tomorrowDate)" [date]="tomorrowDate"></app-date-column>
-        <app-date-column (appointmentDate)="confirmDate($event)" [dia]="getDay(day2Date)" [date]="day2Date"></app-date-column>
-        <app-date-column (appointmentDate)="confirmDate($event)" [dia]="getDay(day3Date)" [date]="day3Date"></app-date-column>
-    </section>
-</div>
+@for (dentist of dentistResource.value()?.data?.dentists; track $index) {
+  <div class="flex gap-6 justify-center">
+      <section class="flex flex-col items-center justify-center text-center p-4">
+      <div class="avatar mb-3">
+          <div class="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+          <img src="https://img.daisyui.com/images/profile/demo/yellingcat@192.webp" />
+          </div>
+      </div>
+  
+      <p class="text-xl font-semibold text-gray-800">{{dentist.name}}</p>
+      <p class="text-sm text-gray-500">{{dentist.specialty}}</p>
+  
+      <div class="mt-2 space-y-1 text-sm text-gray-600">
+          <p>📞 {{dentist.phone}}</p>
+          <p>✉️ {{dentist.email}}</p>
+      </div>
+      </section>
+      <section class="flex gap-6">
+          <app-date-column [dentistID]="dentist.id" (appointmentEmit)="confirmDate($event)" [dia]="'Hoy, ' + getDay(todayDate)" [date]="todayDate"></app-date-column>
+          <app-date-column [dentistID]="dentist.id" (appointmentEmit)="confirmDate($event)" [dia]="'Mañana, ' + getDay(tomorrowDate)" [date]="tomorrowDate"></app-date-column>
+          <app-date-column [dentistID]="dentist.id" (appointmentEmit)="confirmDate($event)" [dia]="getDay(day2Date)" [date]="day2Date"></app-date-column>
+          <app-date-column [dentistID]="dentist.id" (appointmentEmit)="confirmDate($event)" [dia]="getDay(day3Date)" [date]="day3Date"></app-date-column>
+      </section>
+  </div>
+}
 
 <dialog #modal id="my_modal" class="modal">
   <div class="modal-box rounded-2xl shadow-xl">
@@ -32,7 +34,9 @@
     <p class="text-gray-600 text-center mb-6">
       ¿Deseas agendar esta cita con el <span class="font-medium">Dr. Juan Pérez</span>?
     </p>
+
     <form [formGroup]="reasonForm" (ngSubmit)="onSubmit()" class="space-y-4">
+      <!-- Campo: razón de visita -->
       <div class="form-control">
         <label class="label">
           <span class="label-text font-medium text-gray-700">Razón de visita</span>
@@ -50,6 +54,27 @@
           </span>
         }
       </div>
+
+      <div class="form-control">
+        <label class="label">
+          <span class="label-text font-medium text-gray-700">Tipo de visita</span>
+        </label>
+        <select class="select w-full" formControlName="visitType" required >
+          <option value="Seleccione el tipo de visita"  disabled selected>Seleccione el tipo de visita</option>
+          <option value="first_visit">Primera visita</option>
+          <option value="follow_up">Seguimiento</option>
+          <option value="emergency">Emergencia</option>
+          <option value="cleaning">Limpieza</option>
+          <option value="treatment">Control</option>
+        </select>
+        @if (reasonForm.get('visitType')?.invalid && reasonForm.get('visitType')?.touched) {
+          <span class="text-sm text-red-500 mt-1">
+            Debes seleccionar al menos un tipo de visita
+          </span>
+        }
+      </div>
+
+      <!-- Acciones -->
       <div class="modal-action flex justify-end gap-3 pt-4">
         <button type="button" class="btn btn-outline" onclick="my_modal.close()">Cancelar</button>
         <button type="submit" class="btn btn-primary" [disabled]="reasonForm.invalid">

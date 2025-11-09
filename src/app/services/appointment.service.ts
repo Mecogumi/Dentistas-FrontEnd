@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Appointments } from '../interfaces/appointment.interface';
 import { OccupiedAppointments } from '../interfaces/ocuppiedAppointments';
+import { RequestDentist } from '../interfaces/requestDentist.intterface';
 
 @Injectable({
   providedIn: 'root'
@@ -43,10 +44,15 @@ export class AppointmentService {
     return this.http.get<OccupiedAppointments>(url,{params:params});
   }
 
-  requestAppointmen(date:Date,reason:string){
-    const requestDate = date.getUTCDate();
+  requestAppointmen(request:RequestDentist){
     const url = environment.API_URL+"/appointments";
-    return this.http.post(url,{dentistId:1,date:date,type:"first_visit",notes:reason})
+    return this.http.post(url,request)
   }
+
+  cancelAppointment(id: number):Observable<Appointments> {
+    const url = `${environment.API_URL}/appointments/${id}/cancel`;
+    return this.http.patch<Appointments>(url, {});
+  }
+
 
 }

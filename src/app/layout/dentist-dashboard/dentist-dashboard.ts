@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, resource, signal } from '@angular/core';
 import {BreakpointObserver} from '@angular/cdk/layout'
 import {rxResource} from '@angular/core/rxjs-interop'
 import { AppointmentService } from '../../services/appointment.service';
@@ -21,6 +21,8 @@ export class DentistDashboard implements OnInit {
   private breakpointObserver = inject(BreakpointObserver);
   date = signal<Date>(new Date())
   private appointmentService = inject(AppointmentService)
+  private appointmentToCancel = signal<number>(0)
+  
   rxresoruce = rxResource({
     params: ()=>(this.date()),
     stream: ({params}) => this.appointmentService.getAppointmentByDay(params)
@@ -53,6 +55,28 @@ export class DentistDashboard implements OnInit {
     const prev = new Date(current);
     prev.setDate(current.getDate() - 1);
     this.date.set(prev); 
+  }
+
+  onStatusChange(event: Event, appointmentID: number) {
+    const selectElement = event.target as HTMLSelectElement;
+    const selectedValue = selectElement.value;
+  }
+
+  setAppointCancel(id:number){
+    this.appointmentToCancel.set(id)
+  }
+
+  onCancelAppointment(){
+    const modal = document.getElementById('my_modal_cancel') as HTMLDialogElement;
+    if (this.appointmentToCancel()!=0){
+      this.appointmentService.cancelAppointment(this.appointmentToCancel()).subscribe({
+        next: r=>{
+          modal?.close();
+          this.rxresoruce.reload()
+        } 
+      })
+
+    }
   }
 
 }

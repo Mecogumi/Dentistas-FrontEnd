@@ -2,6 +2,9 @@ import { ChangeDetectionStrategy, Component, inject, input, OnInit, output } fro
 import { rxResource } from '@angular/core/rxjs-interop';
 import {  AppointmentService } from '../../../../services/appointment.service';
 import { OccupiedSlot } from '../../../../interfaces/ocuppiedAppointments';
+import { RequestDentist } from '../../../../interfaces/requestDentist.intterface';
+
+
 
 @Component({
   selector: 'app-date-column',
@@ -13,9 +16,10 @@ export class DateColumn implements OnInit {
   
   hours =[9,10,11,12,13,14,15,16]
   
+  dentistID = input.required<number>()
   dia=input.required<string>()
   date= input.required<Date>()
-  appointmentDate = output<Date>()
+  appointmentEmit = output<RequestDentist>()
   private appointmentSerivce = inject(AppointmentService)
 
   
@@ -29,13 +33,17 @@ export class DateColumn implements OnInit {
   }
 
   isOccupied(hour: number): boolean {
-    const resource = this.rxResource.value();
-    if (!resource?.data?.occupiedSlots) return false;
-    return resource.data.occupiedSlots.some((slot: OccupiedSlot) => {
-      const slotDate = new Date(slot.date);
-      return slotDate.getHours() == hour;
-    });
-  }
+  const resource = this.rxResource.value();
+  if (!resource?.data?.occupiedSlots) return false;
+  return resource.data.occupiedSlots.some((slot: OccupiedSlot) => {
+    const slotDate = new Date(slot.date);
+    return (
+      slotDate.getHours() === hour &&
+      slot.dentistId === this.dentistID()
+    );
+  });
+}
+
 
   clickDay(hour: number) {
     const baseDate = new Date(this.date());
@@ -47,7 +55,7 @@ export class DateColumn implements OnInit {
       0,    
       0     
     );
-    this.appointmentDate.emit(appointmentDate);
+    this.appointmentEmit.emit({date:appointmentDate,dentistId:this.dentistID()});
   }
 
 }

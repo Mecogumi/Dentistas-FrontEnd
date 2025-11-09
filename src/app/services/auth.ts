@@ -5,6 +5,7 @@ import { Observable, tap } from 'rxjs';
 import { User } from '../interfaces/user.interface';
 import { Profile } from '../interfaces/profile.interface';
 import { Router } from '@angular/router';
+import { ActiveDentist } from '../interfaces/active-dentist.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -40,6 +41,11 @@ export class Auth {
     return this.http.post<User>(singUp,user).pipe(
       tap(user => {localStorage.setItem("user", JSON.stringify(user))})
     );
+  }
+
+  getActiveDentist():Observable<ActiveDentist>{
+    const url = environment.API_URL+"/auth/active-dentists"
+    return this.http.get<ActiveDentist>(url)
   }
 
 }

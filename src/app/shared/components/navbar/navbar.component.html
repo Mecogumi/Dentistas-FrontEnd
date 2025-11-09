@@ -11,7 +11,7 @@
     @if(profile()?.data?.user?.role=="admin"){
       <a routerLink="/admin" class="btn btn-soft btn-secondary">Administrar</a>
     }
-    @else{
+    @else if (profile()?.data?.user?.role=="patient") {
       <a routerLink="/appointment" class="btn btn-primary-custom">Agendar Cita</a>
     }
   </div>

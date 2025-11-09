@@ -9,7 +9,7 @@ export class AppointmenteStatusPipe implements PipeTransform {
     let status:string=''
     switch(value){
       case 'scheduled':
-        status='Pendiente'
+        status='Agendada'
         break
       case 'completed':
         status='Completada'

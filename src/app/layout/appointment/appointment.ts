@@ -3,6 +3,9 @@ import { DateColumn } from '../../shared/components/appointments/date-column/dat
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AppointmentService } from '../../services/appointment.service';
 import { Router } from '@angular/router';
+import { rxResource } from '@angular/core/rxjs-interop';
+import { Auth } from '../../services/auth';
+import { RequestDentist } from '../../interfaces/requestDentist.intterface';
 
 @Component({
   selector: 'app-appointment',
@@ -12,16 +15,23 @@ import { Router } from '@angular/router';
 })
 export class Appointment {
   private appointmentService = inject(AppointmentService)
+  private authService = inject(Auth)
   private router = inject(Router)
 
   todayDate = new Date();
   tomorrowDate = this.addDays(this.todayDate, 1);
   day2Date = this.addDays(this.todayDate, 2);
   day3Date = this.addDays(this.todayDate, 3);
-  pickedDay = signal<Date|null>(null)
+  requestDentist = signal<RequestDentist>({})
+
+  dentistResource = rxResource({
+    params: ()=>({}),
+    stream: ()=> this.authService.getActiveDentist()
+  })
 
   reasonForm = new FormGroup({
-    reason: new FormControl('', [Validators.required])
+    reason: new FormControl('', [Validators.required]),
+    visitType: new FormControl('', [Validators.required]),
   });
 
   private addDays(base: Date, days: number) {
@@ -35,13 +45,16 @@ export class Appointment {
     return day.charAt(0).toUpperCase() + day.slice(1)
   }
 
-  confirmDate(date:Date){
-    this.pickedDay.set(date);
+  confirmDate(event:RequestDentist){
+    this.requestDentist.set(event)
   }
 
   onSubmit(){
     if(this.reasonForm.valid){
-      this.appointmentService.requestAppointmen(this.pickedDay()!,this.reasonForm.value.reason!).subscribe({
+      let emitDentist = this.requestDentist()
+      emitDentist.notes=this.reasonForm.value.reason!;
+      emitDentist.type= this.reasonForm.value.visitType!;
+      this.appointmentService.requestAppointmen(this.requestDentist()).subscribe({
         next: r => {
           console.log(r);
           const modal = document.getElementById('my_modal') as HTMLDialogElement;
