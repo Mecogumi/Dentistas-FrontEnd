@@ -79,7 +79,11 @@ export class DentistDashboard implements OnInit {
         next: r=>{
           modal?.close();
           this.rxresoruce.reload()
-        } 
+        } ,
+        error: r =>{
+          modal?.close();
+          window.alert("Error al cancelar cita")
+        }
       })
 
     }
@@ -92,6 +96,10 @@ export class DentistDashboard implements OnInit {
         next: r=>{
           modal?.close();
           this.rxresoruce.reload()
+        },
+        error: r =>{
+          modal?.close();
+          window.alert("Error completar cita")
         }
       })
     }

@@ -27,11 +27,12 @@ export class LoginComponent implements OnDestroy {
   onSubmit() {
     this.submitted = true;
     if (this.loginForm.valid) {
-      console.log('Form Submitted!', this.loginForm.value);
       let success=false
       this.suscription= this.authService.login(this.loginForm.value.email!,this.loginForm.value.password!).subscribe({
         next: (res) => {this.router.navigateByUrl('')},
-        error: (err) => console.error('Error login', err)
+        error: r =>{
+          window.alert("Error al inicias sesion")
+        }
       })
     }
   }

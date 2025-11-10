@@ -67,6 +67,11 @@ export class Appointment {
           const modal = document.getElementById('my_modal') as HTMLDialogElement;
           modal?.close();
           this.router.navigateByUrl("/")
+        },
+        error: r =>{
+          const modal = document.getElementById('my_modal') as HTMLDialogElement;
+          modal?.close();
+          window.alert("Error al generar cita")
         }
       })
     }

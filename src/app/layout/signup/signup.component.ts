@@ -36,7 +36,10 @@ export class SignupComponent {
       }
       this.authService.register(user).subscribe(
         {
-          next: user => this.router.navigateByUrl("/")
+          next: user => this.router.navigateByUrl("/"),
+          error: r =>{
+            window.alert("Error al registrar")
+          }
         }
       )
     }

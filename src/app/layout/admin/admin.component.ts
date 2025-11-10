@@ -123,7 +123,11 @@ export class AdminComponent implements OnInit {
         this.createForm.reset({ role: 'patient' });
         this.createSubmitted = false;
         this.usersResource.reload();
-      }
+      },
+      error: r =>{
+          
+          window.alert("Error al crear usuario")
+        }
     });
   }
 

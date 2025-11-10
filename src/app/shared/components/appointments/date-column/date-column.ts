@@ -25,7 +25,7 @@ export class DateColumn implements OnInit {
   
   rxResource = rxResource({
     params: ()=>(this.date()),
-    stream: ({params})=> this.appointmentSerivce.getOcuppiedAppointmentts(params)
+    stream: ({params})=> this.appointmentSerivce.getOcuppiedAppointmentts(params)  
   })
 
   ngOnInit(): void {

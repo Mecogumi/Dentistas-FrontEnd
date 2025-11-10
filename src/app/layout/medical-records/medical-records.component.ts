@@ -73,7 +73,10 @@ export class MedicalRecordsComponent {
         this.form.reset();
         this.submitted = false;
         this.recordsResource.reload()
-      }
+      },
+      error: r =>{
+          window.alert("Error al crear expediente")
+        }
     });
   }
 
