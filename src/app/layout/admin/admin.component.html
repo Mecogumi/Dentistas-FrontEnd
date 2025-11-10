@@ -21,7 +21,7 @@
   </div>
 
   @if (usersResource.isLoading()) {
-    <div class="p-6 text-gray-500">Cargando usuariosâ€¦</div>
+    <div class="p-6 text-gray-500">Cargando usuarios</div>
   }
   @else if (usersResource.error()) {
     <div class="p-6 text-red-500">Error al cargar usuarios.</div>
@@ -44,15 +44,15 @@
         <div class="flex-1">
           @if (u.isActive) {
             <span class="badge badge-success mr-3">Activo</span>
-            <button class="btn btn-sm" (click)="toggleActive(u)">Desactivar</button>
+            <button class="btn btn-sm" [hidden]="u.id==userId()" (click)="toggleActive(u)">Desactivar</button>
           }
           @else {
             <span class="badge badge-ghost mr-3">Inactivo</span>
-            <button class="btn btn-sm btn-primary-custom" (click)="toggleActive(u)">Activar</button>
+            <button class="btn btn-sm btn-primary-custom" [hidden]="u.id==userId()" (click)="toggleActive(u)">Activar</button>
           }
         </div>
         <div class="flex-1">
-          <button class="btn btn-sm btn-error text-white" (click)="askDelete(u.id)">Eliminar</button>
+          <button class="btn btn-sm btn-error text-white" [hidden]="u.id==userId()" (click)="askDelete(u.id)">Eliminar</button>
         </div>
       </div>
     }

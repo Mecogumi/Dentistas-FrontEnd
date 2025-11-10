@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { UsersResponse } from '../interfaces/users.interface';
 
@@ -34,6 +34,7 @@ export class UserAdminService {
     role: 'patient' | 'dentist' | 'admin';
     specialty?: string | null;
   }): Observable<any> {
+    console.log(payload)
     const url = `${environment.API_URL}/auth/register`;
     return this.http.post(url, payload);
   }

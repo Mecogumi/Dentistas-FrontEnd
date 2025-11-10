@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, computed, inject, signal } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -19,6 +19,7 @@ export class AdminComponent implements OnInit {
   private auth = inject(Auth);
   private router = inject(Router);
 
+  userId = computed(()=>this.auth.getUser().data.user.id)
   search = signal<string>('');
   selectedUserId = signal<number | null>(null);
   usersCache = signal<AdminUser[]>([]);
@@ -107,12 +108,13 @@ export class AdminComponent implements OnInit {
     this.createSubmitted = true;
     if (this.createForm.invalid) return;
     const v = this.createForm.value;
-    const payload: any = {
+    let payload: any = {
       name: v.name!,
       email: v.email!,
       phone: v.phone!,
       password: v.password!,
-      role: v.role!
+      role: v.role!,
+      specialty:null
     };
     if (v.role === 'dentist' && v.specialty) {
       payload.specialty = v.specialty;
