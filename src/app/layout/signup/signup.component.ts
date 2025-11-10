@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Auth } from '../../services/auth';
 import { Router } from '@angular/router';
@@ -6,22 +7,26 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './signup.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SignupComponent {
+  private emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  private passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/
   private authService = inject(Auth);
   private router = inject(Router);
+  submitted = false;
+
   signupForm = new FormGroup({
     name: new FormControl('', [Validators.required]),
-    email: new FormControl('', [Validators.required, Validators.email]),
+    email: new FormControl('', [Validators.required, Validators.pattern(this.emailRegex)]),
     phone: new FormControl('', [Validators.required, Validators.minLength(10)]),
-    password: new FormControl('', [Validators.required, Validators.minLength(6)]),
+    password: new FormControl('', [Validators.required, Validators.minLength(6), Validators.pattern(this.passwordRegex)]),
   });
 
   onSubmit() {
-    // TODO: Replace with actual signup logic
+    this.submitted = true;
     if (this.signupForm.valid) {
       const user:UserSign={
         email: this.signupForm.value.email!,
@@ -37,5 +42,10 @@ export class SignupComponent {
     }
 
   }
+
+  get name() { return this.signupForm.controls.name; }
+  get email() { return this.signupForm.controls.email; }
+  get phone() { return this.signupForm.controls.phone; }
+  get password() { return this.signupForm.controls.password; }
   
 }

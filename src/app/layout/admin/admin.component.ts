@@ -36,6 +36,16 @@ export class AdminComponent implements OnInit {
     }
 
     this.usersResource.reload()
+
+    // specialty requerido si el rol es dentista
+    this.createForm.controls.role.valueChanges.subscribe(role => {
+      if (role === 'dentist') {
+        this.createForm.controls.specialty.setValidators([Validators.required]);
+      } else {
+        this.createForm.controls.specialty.clearValidators();
+      }
+      this.createForm.controls.specialty.updateValueAndValidity({ emitEvent: false });
+    });
   }
 
   onSearchInput(value: string) {
@@ -69,15 +79,19 @@ export class AdminComponent implements OnInit {
   goToDashboard() {
     this.router.navigateByUrl('');
   }
+  private emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  private passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/
 
   createForm = new FormGroup({
-    name: new FormControl<string>('', { nonNullable: true, validators: [Validators.required, Validators.minLength(3)] }),
-    email: new FormControl<string>('', { nonNullable: true, validators: [Validators.required, Validators.email] }),
+    name: new FormControl<string>('', { nonNullable: true, validators: [Validators.required, Validators.minLength(6)] }),
+    email: new FormControl<string>('', { nonNullable: true, validators: [Validators.required, Validators.pattern(this.emailRegex)] }),
     phone: new FormControl<string>('', { nonNullable: true, validators: [Validators.required, Validators.minLength(10)] }),
-    password: new FormControl<string>('', { nonNullable: true, validators: [Validators.required, Validators.minLength(8)] }),
+    password: new FormControl<string>('', { nonNullable: true, validators: [Validators.required,Validators.minLength(8), Validators.pattern(this.passwordRegex)] }),
     role: new FormControl<'patient' | 'dentist' | 'admin'>('patient', { nonNullable: true }),
     specialty: new FormControl<string | null>('')
   });
+
+  createSubmitted = false;
 
   openCreateModal() {
     const dlg = document.getElementById('create_user_modal') as HTMLDialogElement | null;
@@ -90,6 +104,7 @@ export class AdminComponent implements OnInit {
   }
 
   submitCreate() {
+    this.createSubmitted = true;
     if (this.createForm.invalid) return;
     const v = this.createForm.value;
     const payload: any = {
@@ -106,8 +121,17 @@ export class AdminComponent implements OnInit {
       next: () => {
         this.closeCreateModal();
         this.createForm.reset({ role: 'patient' });
+        this.createSubmitted = false;
         this.usersResource.reload();
       }
     });
   }
+
+  // Getters para simplificar template
+  get nameCtrl() { return this.createForm.controls.name; }
+  get emailCtrl() { return this.createForm.controls.email; }
+  get phoneCtrl() { return this.createForm.controls.phone; }
+  get passwordCtrl() { return this.createForm.controls.password; }
+  get roleCtrl() { return this.createForm.controls.role; }
+  get specialtyCtrl() { return this.createForm.controls.specialty; }
 }

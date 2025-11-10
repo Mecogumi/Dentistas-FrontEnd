@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+﻿import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { DateColumn } from '../../shared/components/appointments/date-column/date-column';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AppointmentService } from '../../services/appointment.service';
@@ -34,6 +34,7 @@ export class Appointment {
   reasonForm = new FormGroup({
     reason: new FormControl('', [Validators.required]),
     visitType: new FormControl('', [Validators.required]),
+    notes: new FormControl<string | null>('')
   });
 
   private addDays(base: Date, days: number) {
@@ -58,7 +59,7 @@ export class Appointment {
   onSubmit(){
     if(this.reasonForm.valid){
       let emitDentist = this.requestDentist()
-      emitDentist.notes=this.reasonForm.value.reason!;
+      emitDentist.notes = this.reasonForm.value.notes || this.reasonForm.value.reason!;
       emitDentist.type= this.reasonForm.value.visitType!;
       this.appointmentService.requestAppointmen(this.requestDentist()).subscribe({
         next: r => {
@@ -72,4 +73,5 @@ export class Appointment {
   }
 
  }
+
 

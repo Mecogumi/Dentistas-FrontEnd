@@ -1,4 +1,4 @@
-
+﻿
 
 
 <div class="flex items-center justify-between mb-4 mx-20">
@@ -80,7 +80,17 @@
         }
       </div>
 
-      <!-- Acciones -->
+            <div class="form-control">
+        <label class="label">
+          <span class="label-text font-medium text-gray-700">Notas (opcional)</span>
+        </label>
+        <textarea
+          rows="2"
+          placeholder="Detalles adicionales para el dentista"
+          class="textarea textarea-bordered w-full focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all"
+          formControlName="notes"
+        ></textarea>
+      </div><!-- Acciones -->
       <div class="modal-action flex justify-end gap-3 pt-4">
         <button type="button" class="btn btn-outline" onclick="my_modal.close()">Cancelar</button>
         <button type="submit" class="btn btn-primary" [disabled]="reasonForm.invalid">
@@ -90,3 +100,5 @@
     </form>
   </div>
 </dialog>
+
+

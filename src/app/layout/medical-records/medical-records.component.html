@@ -1,4 +1,4 @@
-<section class="container mx-auto px-4 py-6">
+﻿<section class="container mx-auto px-4 py-6">
   <div class="flex items-center justify-between mb-4">
     <h1 class="text-2xl font-semibold">Expedientes médicos</h1>
     <div class="flex gap-2">
@@ -51,7 +51,12 @@
     <form [formGroup]="form" (ngSubmit)="submit()">
       <div class="form-control mb-3">
         <label class="label"><span class="label-text">Diagnóstico</span></label>
-        <input class="input input-bordered w-full" type="text" formControlName="diagnosis" placeholder="Diagnóstico" />
+        <input class="input input-bordered w-full" type="text" formControlName="diagnosis" placeholder="Diagnóstico"  [class.input-error]="diagnosisCtrl.invalid && (diagnosisCtrl.touched || submitted)" />
+      <label class="label">
+        @if (diagnosisCtrl.invalid && (diagnosisCtrl.touched || submitted)) {
+          @if (diagnosisCtrl.errors?.['required']) { <span class="label-text-alt text-red-500">El diagnóstico es requerido.</span> }
+        }
+      </label>
       </div>
       <div class="form-control mb-3">
         <label class="label"><span class="label-text">Tratamiento</span></label>
@@ -74,3 +79,6 @@
   </div>
   <form method="dialog" class="modal-backdrop"><button>close</button></form>
 </dialog>
+
+
+

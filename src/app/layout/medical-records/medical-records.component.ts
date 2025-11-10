@@ -43,6 +43,7 @@ export class MedicalRecordsComponent {
     prescriptions: new FormControl<string | null>(''),
     notes: new FormControl<string | null>(''),
   });
+  submitted = false;
 
   openAddModal() {
     const dlg = document.getElementById('add_medical_record_modal') as HTMLDialogElement | null;
@@ -55,6 +56,7 @@ export class MedicalRecordsComponent {
   }
 
   submit() {
+    this.submitted = true;
     if (this.form.invalid) return;
     const pid = this.patientId();
     if (!pid) return;
@@ -69,6 +71,7 @@ export class MedicalRecordsComponent {
       next: () => {
         this.closeAddModal();
         this.form.reset();
+        this.submitted = false;
         this.recordsResource.reload()
       }
     });
@@ -77,4 +80,5 @@ export class MedicalRecordsComponent {
   goBack(){
     this.location.back();
   }
+  get diagnosisCtrl() { return this.form.controls.diagnosis; }
 }

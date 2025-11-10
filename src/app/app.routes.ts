@@ -8,6 +8,7 @@ import { authGuard } from './Guards/Auth-guard';
 import { NotificationsComponent } from './layout/notifications/notifications.component';
 import { AdminComponent } from './layout/admin/admin.component';
 import { MedicalRecordsComponent } from './layout/medical-records/medical-records.component';
+import { isAdminGuard } from './Guards/isAdmin-guard';
 
 export const routes: Routes = [
   {
@@ -30,6 +31,7 @@ export const routes: Routes = [
   {
     path: 'appointment',
     component: Appointment,
+    canActivate:[authGuard]
   },
   {
     path: 'medical-records/:patientId',
@@ -39,7 +41,7 @@ export const routes: Routes = [
   {
     path: 'admin',
     component: AdminComponent,
-    canActivate:[authGuard]
+    canActivate:[authGuard,isAdminGuard]
   },
   {
     path: 'notifications',
