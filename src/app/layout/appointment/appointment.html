@@ -1,7 +1,4 @@
-﻿
-
-
-<div class="flex items-center justify-between mb-4 mx-20">
+﻿<div class="flex items-center justify-between mb-4 mx-20">
     <p class="p-10 text-4xl font-bold text-primary-highlight">Elige el doctor y la hora</p>
     <button class="btn btn-outline" (click)="goBack()">← Regresar</button>
 </div>
@@ -33,72 +30,109 @@
 }
 
 <dialog #modal id="my_modal" class="modal">
-  <div class="modal-box rounded-2xl shadow-xl">
-    <h3 class="font-semibold text-xl text-center text-gray-800 mb-2">
-      Confirmar cita
+  <div class="modal-box rounded-2xl shadow-xl max-w-lg">
+    <h3 class="font-bold text-2xl text-center text-gray-800 mb-4">
+      ✓ Confirmar tu cita
     </h3>
-    <p class="text-gray-600 text-center mb-6">
-      ¿Deseas agendar esta cita con el <span class="font-medium">Dr. Juan Pérez</span>?
-    </p>
+    
+    @if (requestDentist().dentistId) {
+      <div class="bg-blue-50 rounded-xl p-4 mb-4 space-y-3">
+        <div class="flex items-center gap-3">
+          <span class="text-3xl">👨‍⚕️</span>
+          <div>
+            <p class="text-sm text-gray-500">Doctor</p>
+            <p class="font-semibold text-gray-800"> {{ getDentistName(requestDentist().dentistId!) }}</p>
+          </div>
+        </div>
+        
+        <div class="divider my-2"></div>
+        
+        <div class="flex items-center gap-3">
+          <span class="text-3xl">📅</span>
+          <div>
+            <p class="text-sm text-gray-500">Fecha y hora</p>
+            <p class="font-semibold text-gray-800">{{ formatAppointmentDate() }}</p>
+          </div>
+        </div>
+      </div>
+    }
 
     <form [formGroup]="reasonForm" (ngSubmit)="onSubmit()" class="space-y-4">
-      <!-- Campo: razón de visita -->
       <div class="form-control">
         <label class="label">
-          <span class="label-text font-medium text-gray-700">Razón de visita</span>
+          <span class="label-text font-medium text-gray-700">Tipo de visita *</span>
         </label>
-        <input
-          type="text"
-          placeholder="Ej. limpieza dental"
-          class="input input-bordered w-full focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all"
-          formControlName="reason"
-          required
-        />
-        @if (reasonForm.get('reason')?.invalid && reasonForm.get('reason')?.touched) {
-          <span class="text-sm text-red-500 mt-1">
-            Este campo es obligatorio
-          </span>
-        }
-      </div>
-
-      <div class="form-control">
-        <label class="label">
-          <span class="label-text font-medium text-gray-700">Tipo de visita</span>
-        </label>
-        <select class="select w-full" formControlName="visitType" required >
-          <option value="Seleccione el tipo de visita"  disabled selected>Seleccione el tipo de visita</option>
-          <option value="first_visit">Primera visita</option>
-          <option value="follow_up">Seguimiento</option>
-          <option value="emergency">Emergencia</option>
-          <option value="cleaning">Limpieza</option>
+        <select class="select select-bordered w-full" formControlName="visitType" required>
+          <option value="" disabled selected>Seleccione el tipo de visita</option>
+          <option value="first_visit"> Primera visita</option>
+          <option value="follow_up"> Seguimiento</option>
+          <option value="emergency"> Emergencia</option>
+          <option value="cleaning"> Limpieza</option>
           <option value="treatment">Control</option>
         </select>
         @if (reasonForm.get('visitType')?.invalid && reasonForm.get('visitType')?.touched) {
-          <span class="text-sm text-red-500 mt-1">
-            Debes seleccionar al menos un tipo de visita
-          </span>
+          <label class="label">
+            <span class="label-text-alt text-error">Debes seleccionar un tipo de visita</span>
+          </label>
         }
       </div>
 
-            <div class="form-control">
+      <div class="form-control">
         <label class="label">
-          <span class="label-text font-medium text-gray-700">Notas (opcional)</span>
+          <span class="label-text font-medium text-gray-700">Notas adicionales (opcional)</span>
         </label>
         <textarea
-          rows="2"
-          placeholder="Detalles adicionales para el dentista"
+          rows="3"
+          placeholder="Ejemplo: Dolor en muela inferior derecha desde hace 3 días"
           class="textarea textarea-bordered w-full focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all"
           formControlName="notes"
         ></textarea>
-      </div><!-- Acciones -->
-      <div class="modal-action flex justify-end gap-3 pt-4">
-        <button type="button" class="btn btn-outline" onclick="my_modal.close()">Cancelar</button>
-        <button type="submit" class="btn btn-primary" [disabled]="reasonForm.invalid">
-          Agendar
+        <label class="label">
+          <span class="label-text-alt text-gray-500">Comparte cualquier detalle que ayude al doctor</span>
+        </label>
+      </div>
+
+
+      <div class="modal-action flex justify-end gap-3 pt-2">
+        <button type="button" class="btn btn-outline rounded-xl" onclick="my_modal.close()">
+          Cancelar
+        </button>
+        <button type="submit" class="btn btn-primary rounded-xl" [disabled]="reasonForm.invalid">
+          Confirma tu cita
         </button>
       </div>
     </form>
   </div>
 </dialog>
 
+<!-- Modal de éxito -->
+<dialog #successModal id="success_modal" class="modal">
+  <div class="modal-box rounded-2xl shadow-xl max-w-md text-center">
+    <div class="mb-4">
+      <div class="text-6xl mb-4">✅</div>
+      <h3 class="font-bold text-2xl text-gray-800 mb-2">
+        ¡Cita agendada!
+      </h3>
+      <p class="text-gray-600">
+        Tu cita ha sido confirmada exitosamente
+      </p>
+    </div>
 
+    <div class="bg-green-50 rounded-xl p-4 mb-4 text-left">
+      <p class="text-sm text-gray-600 mb-2">Detalles de tu cita:</p>
+      <div class="space-y-1 text-sm">
+        <p><strong>Fecha:</strong> {{ formatAppointmentDate() }}</p>
+        @if (requestDentist().dentistId) {
+          <p><strong>Doctor:</strong> {{ getDentistName(requestDentist().dentistId!) }}</p>
+        }
+        <p><strong>Tipo:</strong> {{ getVisitTypeLabel() }}</p>
+      </div>
+    </div>
+
+    <div class="modal-action justify-center">
+      <button type="button" class="btn btn-primary rounded-xl" (click)="closeAndNavigate()">
+        Ir a mis citas
+      </button>
+    </div>
+  </div>
+</dialog>

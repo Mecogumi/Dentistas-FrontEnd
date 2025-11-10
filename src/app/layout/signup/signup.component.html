@@ -6,67 +6,139 @@
     </div>
     <div class="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
       <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="card-body">
+        
+        <!-- Nombre completo -->
         <div class="form-control">
           <label class="label">
             <span class="label-text">Nombre completo</span>
           </label>
-          <input type="text" placeholder="Nombre completo" class="input input-bordered focus:outline-none" [class.input-error]="name.invalid && (name.touched || submitted)" formControlName="name" required />
+          <input 
+            type="text" 
+            placeholder="Nombre completo" 
+            class="input input-bordered focus:outline-none" 
+            maxlength="100"
+            [class.input-error]="name.invalid && (name.touched || submitted)" 
+            formControlName="name" 
+            required 
+          />
           <label class="label">
             @if (name.invalid && (name.touched || submitted)) { 
-              @if (name.errors?.['required']) { <span class="label-text-alt text-red-500">El nombre es requerido.</span> } 
-            }</label>
+              @if (name.errors?.['required']) { 
+                <span class="label-text-alt text-red-500">El nombre es requerido.</span> 
+              }
+              @if (name.errors?.['maxlength']) { 
+                <span class="label-text-alt text-red-500">Máximo 100 caracteres.</span> 
+              }
+            }
+          </label>
         </div>
 
+        <!-- Número de teléfono -->
         <div class="form-control">
           <label class="label">
             <span class="label-text">Número de teléfono</span>
           </label>
-          <input type="text" placeholder="10 dígitos" class="input input-bordered focus:outline-none" [class.input-error]="phone.invalid && (phone.touched || submitted)" formControlName="phone" required />
+          <input 
+            type="tel" 
+            placeholder="10 dígitos" 
+            class="input input-bordered focus:outline-none"
+            maxlength="10" 
+            pattern="[0-9]*"
+            inputmode="numeric"
+            [class.input-error]="phone.invalid && (phone.touched || submitted)" 
+            formControlName="phone" 
+            required
+          />
           <label class="label">
-          @if (phone.invalid && (phone.touched || submitted)) { 
-            @if (phone.errors?.['required']) { <span class="label-text-alt text-red-500">El teléfono es requerido.</span> } 
-            @if (phone.errors?.['minlength']) { <span class="label-text-alt text-red-500">Debe tener al menos 10 dígitos.</span> } 
-          }</label>
+            @if (phone.invalid && (phone.touched || submitted)) { 
+              @if (phone.errors?.['required']) { 
+                <span class="label-text-alt text-red-500">El teléfono es requerido.</span> 
+              } 
+              @if (phone.errors?.['minlength']) { 
+                <span class="label-text-alt text-red-500">Debe tener al menos 10 dígitos.</span> 
+              } 
+            }
+          </label>
         </div>
 
+        <!-- Correo electrónico -->
         <div class="form-control">
           <label class="label">
             <span class="label-text">Correo electrónico</span>
           </label>
-          <input type="email" placeholder="email@ejemplo.com" class="input input-bordered focus:outline-none" [class.input-error]="email.invalid && (email.touched || submitted)" formControlName="email" required />
+          <input 
+            type="email" 
+            placeholder="email@ejemplo.com" 
+            class="input input-bordered focus:outline-none" 
+            [class.input-error]="email.invalid && (email.touched || submitted)" 
+            formControlName="email" 
+            required 
+          />
           <label class="label">
-          @if (email.invalid && (email.touched || submitted)) { 
-            @if (email.errors?.['required']) { <span class="label-text-alt text-red-500">El correo es requerido.</span> } 
-            @if (email.errors?.['pattern']) { <span class="label-text-alt text-red-500">Formato de correo inválido.</span> } 
-          }</label>
+            @if (email.invalid && (email.touched || submitted)) { 
+              @if (email.errors?.['required']) { 
+                <span class="label-text-alt text-red-500">El correo es requerido.</span> 
+              } 
+              @if (email.errors?.['pattern']) { 
+                <span class="label-text-alt text-red-500">Formato de correo inválido.</span> 
+              } 
+            }
+          </label>
         </div>
 
-
-
-        <div class="form-control">
+        <!-- Contraseña -->
+        <div class="form-control"> 
           <label class="label">
             <span class="label-text">Contraseña</span>
           </label>
-          <input type="password" placeholder="Contraseña" class="input input-bordered focus:outline-none" [class.input-error]="password.invalid && (password.touched || submitted)" formControlName="password" required />
-          <label class="label">
-          @if (password.invalid && (password.touched || submitted)) {
-            @if (password.errors?.['required']) {<span class="label-text-alt text-red-500">La contraseña es requerida.</span>}
-            @if (password.errors?.['minlength']) { <span class="label-text-alt text-red-500">Mínimo 6 caracteres.</span> } 
-            @if (password.errors?.['pattern'] && !password.errors?.['minlength']) { <span class="label-text-alt text-red-500">Debe incluir mayúscula, minúscula, número y símbolo.</span> }
-          }</label>
+
+          <input 
+            type="password" 
+            placeholder="Contraseña" 
+            class="input input-bordered focus:outline-none" 
+            [class.input-error]="password.invalid && (password.touched || submitted)" 
+            formControlName="password" 
+            required 
+          />
+
+          <label class="label flex flex-col items-start space-y-1">
+            @if (!(password.invalid && (password.touched || submitted))) {
+              <span class="label-text-alt text-gray-500">
+                Mínimo 8 caracteres: mayúscula, minúscula, número y símbolo.
+              </span>
+            }
+
+            <!-- Mostrar errores cuando existan -->
+            @if (password.invalid && (password.touched || submitted)) {
+              @if (password.errors?.['required']) {
+                <span class="label-text-alt text-red-500">La contraseña es requerida.</span>
+              }
+              @if (password.errors?.['minlength']) {
+                <span class="label-text-alt text-red-500">Mínimo 8 caracteres.</span>
+              } 
+              @if (password.errors?.['pattern'] && !password.errors?.['minlength']) {
+                <span class="label-text-alt text-red-500">Debe incluir mayúscula, minúscula, número y símbolo.</span>
+              }
+            }
+          </label>
         </div>
 
+        <!-- Términos y condiciones -->
         <div class="form-control mt-2">
           <p class="text-xs text-gray-500">Al registrarte aceptas nuestros términos y condiciones.</p>
         </div>
 
+        <!-- Botón de registro -->
         <div class="form-control mt-4 flex flex-col items-center">
-          <button class="btn btn-primary bg-blue-500 text-white" type="submit" [disabled]="signupForm.invalid">Registrarse</button>
+          <button 
+            class="btn btn-primary bg-blue-500 text-white" 
+            type="submit" 
+            [disabled]="signupForm.invalid"
+          >
+            Registrarse
+          </button>
         </div>
       </form>
     </div>
   </div>
 </div>
-
-
-
