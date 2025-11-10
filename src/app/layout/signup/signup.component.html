@@ -19,6 +19,18 @@
 
         <div class="form-control">
           <label class="label">
+            <span class="label-text">Número de teléfono</span>
+          </label>
+          <input type="text" placeholder="10 dígitos" class="input input-bordered focus:outline-none" [class.input-error]="phone.invalid && (phone.touched || submitted)" formControlName="phone" required />
+          <label class="label">
+          @if (phone.invalid && (phone.touched || submitted)) { 
+            @if (phone.errors?.['required']) { <span class="label-text-alt text-red-500">El teléfono es requerido.</span> } 
+            @if (phone.errors?.['minlength']) { <span class="label-text-alt text-red-500">Debe tener al menos 10 dígitos.</span> } 
+          }</label>
+        </div>
+
+        <div class="form-control">
+          <label class="label">
             <span class="label-text">Correo electrónico</span>
           </label>
           <input type="email" placeholder="email@ejemplo.com" class="input input-bordered focus:outline-none" [class.input-error]="email.invalid && (email.touched || submitted)" formControlName="email" required />
@@ -29,17 +41,7 @@
           }</label>
         </div>
 
-        <div class="form-control">
-          <label class="label">
-            <span class="label-text">Número de teléfono</span>
-          </label>
-          <input type="text" placeholder="10 dígitos" class="input input-bordered focus:outline-none" [class.input-error]="phone.invalid && (phone.touched || submitted)" formControlName="phone" required />
-          <label class="label">
-          @if (phone.invalid && (phone.touched || submitted)) { 
-            @if (phone.errors?.['required']) { <span class="label-text-alt text-red-500">El teléfono es requerido.</span> } 
-            @if (phone.errors?.['minlength']) { <span class="label-text-alt text-red-500">Debe tener al menos 10 dígitos.</span> } 
-          }</label>
-        </div>
+
 
         <div class="form-control">
           <label class="label">
